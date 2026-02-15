@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, Facebook, Instagram, ShoppingCart, Search, Sparkles } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, ShoppingCart, Search, Sparkles } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
