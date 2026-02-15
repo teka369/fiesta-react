@@ -131,7 +131,7 @@ const Navbar: React.FC = () => {
 
             {/* Desktop Navigation - Cambiados a HashLink */}
             <div className="hidden lg:flex items-center gap-1 xl:gap-2">
-              {navItems.map((item, index) => (
+              {navItems.map((item,) => (
                 <Link
                   key={item.name}
                   smooth // Habilita el scroll suave
@@ -142,9 +142,7 @@ const Navbar: React.FC = () => {
                       ? 'bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white shadow-lg scale-105' 
                       : 'text-gray-700 hover:text-orange-600'
                   }`}
-                  style={{
-                    animation: `fadeIn 0.5s ease-out ${index * 0.1}s both`,
-                  }}
+                  
                 >
                   <span className="flex items-center gap-2">
                     <span className={`text-lg transition-transform duration-300 ${
