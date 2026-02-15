@@ -10,7 +10,6 @@ import {
   Facebook,
   Instagram,
   Calendar,
-  Sparkles,
   ArrowRight,
   User,
   MessageSquare,

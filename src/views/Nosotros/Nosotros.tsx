@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { 
   Heart, 
   Star, 
@@ -17,7 +16,6 @@ import {
   Mail,
   MapPin,
   ArrowRight,
-  Quote
 } from 'lucide-react';
 
 // ============================================

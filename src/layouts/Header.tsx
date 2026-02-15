@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Navbar from './Navbar';
 import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 
 interface FloatingElement {

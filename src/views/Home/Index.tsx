@@ -20,7 +20,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Quote,
-  FileQuestion
 } from 'lucide-react';
 import FAQSection from './components/Preguntas-Frecuentes';
 

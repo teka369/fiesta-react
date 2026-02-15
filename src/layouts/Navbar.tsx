@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Instagram, ShoppingCart, Search, Sparkles } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, ShoppingCart, Search, } from 'lucide-react';
 // Importamos HashLink para que el scroll funcione entre páginas
 import { HashLink as Link } from 'react-router-hash-link';
 
