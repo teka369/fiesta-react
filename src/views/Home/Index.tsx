@@ -19,8 +19,10 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Quote
+  Quote,
+  FileQuestion
 } from 'lucide-react';
+import FAQSection from './components/Preguntas-Frecuentes';
 
 // ============================================
 // 🎊 SECCIÓN 1: WELCOME
@@ -634,6 +636,8 @@ const TestimonialsSection: React.FC = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  
+
   return (
     <section className="relative py-20 lg:py-24 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 overflow-hidden">
       {/* Decorative elements */}
@@ -647,6 +651,8 @@ const TestimonialsSection: React.FC = () => {
             <Heart className="w-5 h-5 text-purple-600 fill-purple-600" />
             <span className="font-bold text-purple-700">Testimonios</span>
           </div>
+
+            
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
             <span className="text-gray-800">Lo Que Dicen</span>
@@ -731,9 +737,25 @@ const TestimonialsSection: React.FC = () => {
         </div>
       </div>
     </section>
+
+    
+  );
+
+  
+};
+ // ============================================
+// ❓ SECCIÓN 8: PREGUNTAS FRECUENTES (FAQ)
+// ============================================
+const QuestionsSection: React.FC = () => {
+  return (
+    <section id="preguntas" className="py-20 bg-white"> 
+      {/* El ID va aquí, en el contenedor principal de la sección */}
+      <div className="container mx-auto px-4">
+        <FAQSection />
+      </div>
+    </section>
   );
 };
-
 // ============================================
 // 🎯 MAIN COMPONENT
 // ============================================
@@ -747,6 +769,8 @@ const Main: React.FC = () => {
       <ExploreRentalsSection />
       <DeliveryAreasSection />
       <TestimonialsSection />
+      <QuestionsSection/>
+       {/* Esta es la que recibirá el scroll */}
     </main>
   );
 };

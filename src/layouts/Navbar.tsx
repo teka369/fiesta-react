@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Facebook, Instagram, ShoppingCart, Search, Sparkles } from 'lucide-react';
+// Importamos HashLink para que el scroll funcione entre páginas
+import { HashLink as Link } from 'react-router-hash-link';
+
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,12 +19,14 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // CORRECCIÓN DE RUTAS: 
+  // Agregamos "/" antes de los "#" para que React sepa volver al Home si estás en "Nosotros"
   const navItems = [
-    { name: 'Home', href: '#home', emoji: '🏠' },
-    { name: 'Alquileres', href: '#alquileres', emoji: '🎪' },
-    { name: 'Sobre Nosotros', href: '#sobre-nosotros', emoji: '⭐' },
-    { name: 'Preguntas Frecuentes', href: '#faq', emoji: '❓' },
-    { name: 'Contáctenos', href: '#contacto', emoji: '📞' },
+    { name: 'Home', href: '/', emoji: '🏠' },
+    { name: 'Alquileres', href: '/#alquileres', emoji: '🎪' },
+    { name: 'Sobre Nosotros', href: '/nosotros', emoji: '⭐' }, // Ruta a tu página de Nosotros
+    { name: 'Preguntas Frecuentes', href: '/#preguntas', emoji: '❓' },
+    { name: 'Contáctenos', href: '/contact', emoji: '📞' },
   ];
 
   return (
@@ -84,33 +89,17 @@ const Navbar: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20 lg:h-28">
             
-            {/* Logo - ESPACIO PARA TU IMAGEN */}
-            <a 
-              href="#home" 
+            {/* Logo - Usamos Link para volver al Home sin recargar */}
+            <Link 
+              to="/" 
               className="flex items-center gap-3 group relative"
             >
-              {/* Sparkles decorativos */}
               <div className="absolute -top-2 -left-2 text-yellow-400 animate-ping">✨</div>
               <div className="absolute -bottom-2 -right-2 text-orange-400 animate-ping" style={{animationDelay: '0.5s'}}>✨</div>
               
               <div className="relative">
-                {/* Glow efecto */}
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
                 
-                {/* 
-                  ============================================
-                  🖼️ AQUÍ VA TU LOGO - REEMPLAZA ESTE DIV
-                  ============================================
-                  Reemplaza todo este div con:
-                  
-                  <img 
-                    src="/images/logo.png" 
-                    alt="Sunny Party Rentals Logo" 
-                    className={`relative transition-all duration-500 shadow-2xl ${
-                      isScrolled ? 'w-14 h-14' : 'w-16 h-16 lg:w-20 lg:h-20'
-                    }`}
-                  />
-                */}
                 <div className={`relative bg-gradient-to-br from-yellow-400 via-orange-400 to-amber-500 rounded-full transition-all duration-500 shadow-2xl group-hover:shadow-3xl group-hover:scale-110 flex items-center justify-center ${
                   isScrolled ? 'w-14 h-14' : 'w-16 h-16 lg:w-20 lg:h-20'
                 }`}>
@@ -124,7 +113,6 @@ const Navbar: React.FC = () => {
                   />
                   </div>
                 </div>
-                {/* FIN DEL ESPACIO DEL LOGO */}
               </div>
               
               <div className="flex flex-col">
@@ -139,17 +127,18 @@ const Navbar: React.FC = () => {
                   Rentals LLC ⭐
                 </span>
               </div>
-            </a>
+            </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Cambiados a HashLink */}
             <div className="hidden lg:flex items-center gap-1 xl:gap-2">
               {navItems.map((item, index) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
-                  onClick={() => setActiveSection(item.href.slice(1))}
+                  smooth // Habilita el scroll suave
+                  to={item.href}
+                  onClick={() => setActiveSection(item.href.replace('/#', ''))}
                   className={`relative px-4 xl:px-5 py-3 font-bold rounded-2xl transition-all duration-300 group ${
-                    activeSection === item.href.slice(1) 
+                    activeSection === item.href.replace('/#', '') 
                       ? 'bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white shadow-lg scale-105' 
                       : 'text-gray-700 hover:text-orange-600'
                   }`}
@@ -159,25 +148,23 @@ const Navbar: React.FC = () => {
                 >
                   <span className="flex items-center gap-2">
                     <span className={`text-lg transition-transform duration-300 ${
-                      activeSection === item.href.slice(1) ? 'scale-125' : 'group-hover:scale-125'
+                      activeSection === item.href.replace('/#', '') ? 'scale-125' : 'group-hover:scale-125'
                     }`}>
                       {item.emoji}
                     </span>
                     <span>{item.name}</span>
                   </span>
                   
-                  {/* Hover background */}
-                  {activeSection !== item.href.slice(1) && (
+                  {activeSection !== item.href.replace('/#', '') && (
                     <span className="absolute inset-0 bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></span>
                   )}
-                </a>
+                </Link>
               ))}
             </div>
 
             {/* Search + CTA + Mobile Menu */}
             <div className="flex items-center gap-3">
               
-              {/* Search Bar - Colores cálidos */}
               <div className={`hidden md:flex items-center transition-all duration-500 ${
                 isSearchFocused ? 'w-64' : 'w-48'
               }`}>
@@ -203,18 +190,13 @@ const Navbar: React.FC = () => {
                     }`}
                     size={20}
                   />
-                  {isSearchFocused && (
-                    <Sparkles 
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-yellow-500 animate-pulse"
-                      size={18}
-                    />
-                  )}
                 </div>
               </div>
 
-              {/* CTA Button */}
-              <a
-                href="#reservar"
+              {/* CTA Button - También con HashLink */}
+              <Link
+                smooth
+                to="/#reservar"
                 className="hidden sm:flex items-center gap-2 px-5 lg:px-7 py-3 lg:py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-sm lg:text-base rounded-full shadow-2xl shadow-orange-300 hover:shadow-3xl hover:shadow-amber-400 hover:scale-110 transition-all duration-300 relative overflow-hidden group"
               >
                 <span className="relative z-10 flex items-center gap-2">
@@ -222,19 +204,13 @@ const Navbar: React.FC = () => {
                   ¡Reserva Ya!
                   <ShoppingCart size={18} className="group-hover:rotate-12 transition-transform duration-300" />
                 </span>
-                
-                {/* Shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                
-                {/* Pulse ring */}
                 <div className="absolute inset-0 rounded-full bg-orange-400 animate-ping opacity-30"></div>
-              </a>
+              </Link>
 
-              {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="lg:hidden p-3 rounded-2xl bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-400 text-white hover:scale-110 hover:rotate-6 transition-all duration-300 shadow-lg"
-                aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -248,14 +224,13 @@ const Navbar: React.FC = () => {
                 type="text"
                 placeholder="🔍 Buscar..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-full bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 border-2 border-orange-300 font-semibold outline-none focus:border-orange-500 focus:shadow-lg transition-all duration-300"
               />
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500" size={20} />
             </div>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu - Cambiados a HashLink */}
           <div 
             className={`lg:hidden overflow-hidden transition-all duration-500 ${
               isMobileMenuOpen ? 'max-h-screen opacity-100 mb-6' : 'max-h-0 opacity-0'
@@ -263,64 +238,49 @@ const Navbar: React.FC = () => {
           >
             <div className="flex flex-col gap-3 py-4">
               {navItems.map((item, index) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
+                  smooth
+                  to={item.href}
                   onClick={() => {
-                    setActiveSection(item.href.slice(1));
+                    setActiveSection(item.href.replace('/#', ''));
                     setIsMobileMenuOpen(false);
                   }}
                   className={`px-5 py-4 font-bold rounded-2xl transition-all duration-300 flex items-center gap-3 ${
-                    activeSection === item.href.slice(1)
+                    activeSection === item.href.replace('/#', '')
                       ? 'bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white shadow-xl scale-105'
-                      : 'bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 text-gray-700 hover:scale-105 hover:shadow-lg'
+                      : 'bg-gradient-to-r from-orange-50 via-amber-50 to-yellow-50 text-gray-700'
                   }`}
-                  style={{
-                    animation: `slideIn 0.3s ease-out ${index * 0.05}s both`,
-                  }}
                 >
                   <span className="text-2xl">{item.emoji}</span>
                   <span>{item.name}</span>
-                </a>
+                </Link>
               ))}
               
-              <a
-                href="#reservar"
-                className="mt-2 px-5 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black rounded-2xl text-center shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+              <Link
+                smooth
+                to="/#reservar"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-2 px-5 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black rounded-2xl text-center shadow-2xl flex items-center justify-center gap-2"
               >
                 <span className="animate-bounce">🎉</span>
                 ¡Reserva Ahora!
                 <span className="animate-bounce" style={{animationDelay: '0.2s'}}>🎈</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* CSS Animations */}
       <style>{`
         @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+          from { opacity: 0; transform: translateX(-20px); }
+          to { opacity: 1; transform: translateX(0); }
         }
-
         .hover\:shadow-3xl:hover {
           box-shadow: 0 25px 50px -12px rgba(251, 146, 60, 0.5);
         }

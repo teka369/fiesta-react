@@ -41,7 +41,7 @@ const Carousel: React.FC = () => {
   const images: CarouselImage[] = [
     {
       id: 1,
-      url: 'https://xtremefunzone.com/wp-content/uploads/2019/01/13.png', // 👈 REEMPLAZA AQUÍ
+      url: '/images/trampolin1.jpg', // 👈 REEMPLAZA AQUÍ
       alt: 'Trampolín gigante colorido para niños',
       badge: '¡MÁS POPULAR!',
       badgeColor: 'bg-red-500'
@@ -57,7 +57,7 @@ const Carousel: React.FC = () => {
       id: 3,
       url: '/images/mesas-sillas.jpg', // 👈 REEMPLAZA AQUÍ
       alt: 'Mesas y sillas decoradas para eventos',
-      badge: 'COMBO',
+      badge: '-20% OFF',
       badgeColor: 'bg-orange-500'
     },
     {
@@ -202,91 +202,7 @@ const Carousel: React.FC = () => {
   );
 };
 
-// ============================================
-// 📐 SEPARADOR TIPO MONTAÑA - MEJORADO
-// ============================================
-const MountainSeparator: React.FC = () => {
-  return (
-    <div className="relative w-full h-48 md:h-56 lg:h-64 overflow-hidden -mt-1">
-      {/* Background gradient que continúa del header */}
-      <div className="absolute inset-0 bg-gradient-to-b from-orange-50/80 via-amber-50/40 to-transparent"></div>
-      
-      {/* Wave SVG - Más alto y con mejor forma */}
-      <svg
-        className="absolute bottom-0 w-full h-full"
-        viewBox="0 0 1440 400"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Gradient Definition */}
-        <defs>
-          <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#f97316" />
-            <stop offset="25%" stopColor="#fb923c" />
-            <stop offset="50%" stopColor="#fbbf24" />
-            <stop offset="75%" stopColor="#fb923c" />
-            <stop offset="100%" stopColor="#f97316" />
-          </linearGradient>
-          
-          <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#fb923c" />
-            <stop offset="50%" stopColor="#fbbf24" />
-            <stop offset="100%" stopColor="#fb923c" />
-          </linearGradient>
-        </defs>
-        
-        {/* Capa 1 - Ola trasera muy suave (comienza desde arriba) */}
-        <path
-          fill="url(#waveGradient1)"
-          fillOpacity="0.15"
-          d="M0,64L48,80C96,96,192,128,288,133.3C384,139,480,117,576,112C672,107,768,117,864,133.3C960,149,1056,171,1152,165.3C1248,160,1344,128,1392,112L1440,96L1440,400L1392,400C1344,400,1248,400,1152,400C1056,400,960,400,864,400C768,400,672,400,576,400C480,400,384,400,288,400C192,400,96,400,48,400L0,400Z"
-          className="animate-wave-slow"
-        />
-        
-        {/* Capa 2 - Ola media */}
-        <path
-          fill="url(#waveGradient2)"
-          fillOpacity="0.3"
-          d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,154.7C672,149,768,171,864,186.7C960,203,1056,213,1152,202.7C1248,192,1344,160,1392,144L1440,128L1440,400L1392,400C1344,400,1248,400,1152,400C1056,400,960,400,864,400C768,400,672,400,576,400C480,400,384,400,288,400C192,400,96,400,48,400L0,400Z"
-          className="animate-wave-medium"
-        />
-        
-        {/* Capa 3 - Ola principal (más pronunciada) */}
-        <path
-          fill="url(#waveGradient1)"
-          fillOpacity="0.5"
-          d="M0,224L48,234.7C96,245,192,267,288,261.3C384,256,480,224,576,218.7C672,213,768,235,864,250.7C960,267,1056,277,1152,266.7C1248,256,1344,224,1392,208L1440,192L1440,400L1392,400C1344,400,1248,400,1152,400C1056,400,960,400,864,400C768,400,672,400,576,400C480,400,384,400,288,400C192,400,96,400,48,400L0,400Z"
-          className="animate-wave-fast"
-        />
-        
-        {/* Capa 4 - Ola frontal final (la más oscura y suave hacia abajo) */}
-        <path
-          fill="url(#waveGradient2)"
-          fillOpacity="0.7"
-          d="M0,288L48,298.7C96,309,192,331,288,325.3C384,320,480,288,576,282.7C672,277,768,299,864,314.7C960,331,1056,341,1152,330.7C1248,320,1344,288,1392,272L1440,256L1440,400L1392,400C1344,400,1248,400,1152,400C1056,400,960,400,864,400C768,400,672,400,576,400C480,400,384,400,288,400C192,400,96,400,48,400L0,400Z"
-          className="animate-wave-slower"
-        />
-      </svg>
 
-      {/* Decorative elements on waves - Mejor distribuidos */}
-      <div className="absolute top-12 left-1/4 text-3xl lg:text-4xl animate-bounce" style={{ animationDuration: '3s' }}>
-        🎈
-      </div>
-      <div className="absolute top-20 right-1/4 text-3xl lg:text-4xl animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>
-        🎉
-      </div>
-      <div className="absolute top-16 left-1/2 text-3xl lg:text-4xl animate-bounce" style={{ animationDuration: '2.8s', animationDelay: '0.3s' }}>
-        ⭐
-      </div>
-      <div className="absolute bottom-20 left-1/3 text-2xl lg:text-3xl animate-bounce" style={{ animationDuration: '3.2s', animationDelay: '0.7s' }}>
-        🎪
-      </div>
-      <div className="absolute bottom-24 right-1/3 text-2xl lg:text-3xl animate-bounce" style={{ animationDuration: '2.7s', animationDelay: '0.4s' }}>
-        🎨
-      </div>
-    </div>
-  );
-};
 
 const Header: React.FC = () => {
   const [floatingElements, setFloatingElements] = useState<FloatingElement[]>([]);
@@ -327,13 +243,11 @@ const Header: React.FC = () => {
 
   return (
     <>
-      {/* Navbar Component */}
-      <Navbar />
 
       {/* Hero Section */}
       <div 
         ref={heroRef}
-        className="relative min-h-[80vh] lg:min-h-[85vh] bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 overflow-hidden pt-32 lg:pt-40 pb-8 lg:pb-12"
+        className="relative min-h-[80vh] lg:min-h-[85vh] bg-gradient-to-b from-orange-50 via-amber-50 to-yellow-50 overflow-hidden pt-32 lg:pt-40 pb-8 lg:pb-12"
       >
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-20">
@@ -448,8 +362,7 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* SEPARADOR TIPO MONTAÑA */}
-      <MountainSeparator />
+      
 
       {/* CSS Animations */}
       <style>{`
