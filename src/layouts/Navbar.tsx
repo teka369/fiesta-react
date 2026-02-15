@@ -235,7 +235,7 @@ const Navbar: React.FC = () => {
             }`}
           >
             <div className="flex flex-col gap-3 py-4">
-              {navItems.map((item, index) => (
+              {navItems.map((item,) => (
                 <Link
                   key={item.name}
                   smooth
