@@ -99,6 +99,7 @@ export async function uploadProductImage(file: File) {
 
 export interface SiteSettings {
   googleMapsEmbedUrl?: string | null;
+  featuredProductId?: string | null;
 }
 
 export async function fetchSettings(): Promise<SiteSettings> {
@@ -284,4 +285,28 @@ export async function deletePackage(id: string) {
     headers: authHeaders(),
   });
   if (!res.ok) throw new Error(`Error ${res.status}`);
+}
+
+// ——— Contact (público) ———
+
+export interface ContactFormData {
+  name: string;
+  email: string;
+  phone?: string;
+  eventDate?: string;
+  eventType?: string;
+  message: string;
+}
+
+export async function submitContact(data: ContactFormData) {
+  const res = await fetch(`${API_BASE}/contact`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Error ${res.status}`);
+  }
+  return res.json();
 }

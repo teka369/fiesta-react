@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Building
 } from 'lucide-react';
+import { submitContact } from '../../lib/api';
 
 // ============================================
 // 🎯 SECCIÓN 1: HERO - CONTACTO
@@ -91,12 +92,31 @@ const ContactFormSection: React.FC = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would add the logic to send the form
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setError(null);
+    setIsLoading(true);
+    
+    try {
+      await submitContact(formData);
+      setSubmitted(true);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        eventDate: '',
+        eventType: '',
+        message: '',
+      });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send message');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -245,9 +265,15 @@ const ContactFormSection: React.FC = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="group w-full py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3"
+                  disabled={isLoading}
+                  className="group w-full py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {submitted ? (
+                  {isLoading ? (
+                    <>
+                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : submitted ? (
                     <>
                       <CheckCircle className="w-6 h-6" />
                       Message sent!
@@ -260,6 +286,12 @@ const ContactFormSection: React.FC = () => {
                     </>
                   )}
                 </button>
+
+                {error && (
+                  <div className="p-4 bg-red-50 border-2 border-red-300 rounded-2xl">
+                    <p className="text-red-700 font-bold text-center">{error}</p>
+                  </div>
+                )}
 
                 {submitted && (
                   <div className="p-4 bg-green-50 border-2 border-green-300 rounded-2xl">

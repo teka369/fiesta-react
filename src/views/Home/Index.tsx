@@ -23,13 +23,13 @@ import {
   Quote,
   Loader2,
 } from 'lucide-react';
-import { fetchProducts, fetchCategories, fetchProductById, fetchSettings, type SiteSettings } from '../../lib/api';
+import { fetchProducts, fetchCategories, fetchProductById, fetchSettings, updateSettings, type SiteSettings } from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
 import type { Product } from '../../types/product';
 import type { Category } from '../../types/product';
 import FAQSection from './components/Preguntas-Frecuentes';
 
-const HOME_FEATURED_PRODUCT_KEY = 'fiesta_home_featured_product_id';
+// Removed localStorage key - now using database via settings API
 
 // ============================================
 // 🎊 SECCIÓN 1: WELCOME
@@ -97,16 +97,26 @@ const WelcomeSection: React.FC = () => {
 // ============================================
 // 🎪 SECCIÓN 2: MEJOR SERVICIO (producto destacado; admin: seleccionar → Aceptar / Reemplazar)
 // ============================================
-const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => {
+const BestServiceSection: React.FC<{ 
+  products: Product[];
+  featuredProductId: string | null | undefined;
+  onFeaturedProductChange: (productId: string | null) => Promise<void>;
+}> = ({ products, featuredProductId, onFeaturedProductChange }) => {
   const { token } = useAuth();
-  const [savedId, setSavedId] = useState<string>(() => localStorage.getItem(HOME_FEATURED_PRODUCT_KEY) ?? '');
-  const [pendingId, setPendingId] = useState<string>(savedId);
+  const [pendingId, setPendingId] = useState<string>(featuredProductId ?? '');
   const [fetchedFeatured, setFetchedFeatured] = useState<Product | null>(null);
   const [imageError, setImageError] = useState(false);
+  const [saving, setSaving] = useState(false);
 
+  const savedId = featuredProductId ?? '';
   const fromList = products.find((p) => p.id === savedId);
   const featuredProduct = fromList ?? fetchedFeatured ?? products[0];
   const hasFeatured = !!savedId;
+
+  // Update pendingId when featuredProductId changes from parent
+  useEffect(() => {
+    setPendingId(featuredProductId ?? '');
+  }, [featuredProductId]);
 
   // Si hay un producto guardado pero no está en la lista (ej. no viene en los primeros 50), cargarlo por ID
   useEffect(() => {
@@ -123,11 +133,18 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
       .catch(() => setFetchedFeatured(null));
   }, [savedId, products]);
 
-  const handleAcceptOrReplace = () => {
+  const handleAcceptOrReplace = async () => {
     if (!pendingId) return;
-    localStorage.setItem(HOME_FEATURED_PRODUCT_KEY, pendingId);
-    setSavedId(pendingId);
-    setImageError(false);
+    setSaving(true);
+    try {
+      await onFeaturedProductChange(pendingId);
+      setImageError(false);
+    } catch (error) {
+      console.error('Error saving featured product:', error);
+      // Optionally show error message to user
+    } finally {
+      setSaving(false);
+    }
   };
 
   const rawUrl = featuredProduct?.images?.[0]?.url;
@@ -190,9 +207,10 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
                   <button
                     type="button"
                     onClick={handleAcceptOrReplace}
-                    className="w-full py-3 rounded-xl font-black text-white bg-orange-500 hover:bg-orange-600 transition-colors"
+                    disabled={saving || pendingId === savedId}
+                    className="w-full py-3 rounded-xl font-black text-white bg-orange-500 hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {hasFeatured ? 'Replace featured product' : 'Set featured product'}
+                    {saving ? 'Saving...' : hasFeatured ? 'Replace featured product' : 'Set featured product'}
                   </button>
                 )}
               </div>
@@ -810,7 +828,7 @@ const Main: React.FC = () => {
     Promise.all([
       fetchProducts({ limit: 50, sortBy: 'createdAt', sortOrder: 'desc' }).then((r) => r.data ?? []),
       fetchCategories().then((c) => (Array.isArray(c) ? c : [])),
-      fetchSettings().catch(() => ({ googleMapsEmbedUrl: null })),
+      fetchSettings().catch(() => ({ googleMapsEmbedUrl: null, featuredProductId: null })),
     ])
       .then(([data, cats, site]) => {
         setProducts(data);
@@ -820,6 +838,14 @@ const Main: React.FC = () => {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  const handleFeaturedProductChange = async (productId: string | null) => {
+    const updatedSettings = await updateSettings({
+      ...settings,
+      featuredProductId: productId,
+    });
+    setSettings(updatedSettings);
+  };
 
   const productCountByCategory: Record<string, number> = {};
   products.forEach((p) => {
@@ -838,7 +864,11 @@ const Main: React.FC = () => {
         </section>
       ) : (
         <>
-          <BestServiceSection products={products} />
+          <BestServiceSection 
+            products={products} 
+            featuredProductId={settings?.featuredProductId}
+            onFeaturedProductChange={handleFeaturedProductChange}
+          />
           <FeaturedProductsSection products={products} />
         </>
       )}
