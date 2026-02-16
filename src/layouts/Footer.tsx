@@ -6,12 +6,12 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const navLinks = [
-    { to: '/', label: 'Inicio' },
-    { to: '/tienda', label: 'Tienda' },
-    { to: '/nosotros', label: 'Sobre Nosotros' },
-    { to: '/#preguntas', label: 'Preguntas Frecuentes' },
-    { to: '/contact', label: 'Contacto' },
-    { to: '/carrito', label: 'Carrito' },
+    { to: '/', label: 'Main' },
+    { to: '/tienda', label: 'Shop' },
+    { to: '/nosotros', label: 'About us' },
+    { to: '/#preguntas', label: 'Frecuently questions' },
+    { to: '/contact', label: 'Contact' },
+    { to: '/carrito', label: 'Car' },
   ];
 
   return (
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
               className="text-xs text-gray-500 hover:text-orange-600 transition-colors font-medium"
               title="Acceso administrador"
             >
-              Acceso admin
+              Admin acces
             </Link>
           </div>
         </div>
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
             © {currentYear} Sunny Party Rentals. Todos los derechos reservados.
           </p>
           <p className="text-xs text-gray-500 font-medium">
-            Hecho con 🎉 para fiestas inolvidables
+            Made with 🎉 for unforgettable partys
           </p>
         </div>
       </div>
