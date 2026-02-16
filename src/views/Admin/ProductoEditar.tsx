@@ -52,9 +52,9 @@ export default function ProductoEditar() {
     return (
       <main className="min-h-screen bg-gray-50 pt-28 pb-20">
         <div className="container mx-auto px-4 text-center py-16">
-          <p className="text-gray-600 mb-4">Producto no encontrado.</p>
+          <p className="text-gray-600 mb-4">Product not found.</p>
           <Link to="/admin" className="text-orange-600 font-bold hover:underline">
-            Volver al listado
+            Back to list
           </Link>
         </div>
       </main>
@@ -69,9 +69,9 @@ export default function ProductoEditar() {
           className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 font-semibold mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
-          Volver al listado
+          Back to list
         </Link>
-        <h1 className="text-2xl font-black text-gray-800 mb-8">Editar producto</h1>
+        <h1 className="text-2xl font-black text-gray-800 mb-8">Edit product</h1>
         <ProductoForm
           initialData={product}
           onSubmit={handleSubmit}

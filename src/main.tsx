@@ -24,6 +24,7 @@ import CategoriaNueva from './views/Admin/CategoriaNueva'
 import CategoriaEditar from './views/Admin/CategoriaEditar'
 import PaqueteNuevo from './views/Admin/PaqueteNuevo'
 import PaqueteEditar from './views/Admin/PaqueteEditar'
+import AdminSettings from './views/Admin/Settings'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -31,6 +32,7 @@ createRoot(document.getElementById('root')!).render(
       <CartProvider>
         <BrowserRouter>
           <Navbar />
+          <div className="pt-20 md:pt-20 lg:pt-24">
           <Routes>
           <Route path="/" element={<><Header /><Main /></>} />
           <Route path="/nosotros" element={<AboutUs />} />
@@ -48,9 +50,11 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/admin/categorias/:id/editar" element={<ProtectedRoute><CategoriaEditar /></ProtectedRoute>} />
           <Route path="/admin/paquetes/nuevo" element={<ProtectedRoute><PaqueteNuevo /></ProtectedRoute>} />
           <Route path="/admin/paquetes/:id/editar" element={<ProtectedRoute><PaqueteEditar /></ProtectedRoute>} />
-          <Route path="*" element={<div>Página no encontrada</div>} />
+          <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+          <Route path="*" element={<div>Page not found</div>} />
         </Routes>
         <Footer />
+        </div>
       </BrowserRouter>
       </CartProvider>
     </AuthProvider>

@@ -18,15 +18,15 @@ import type { Product } from '../../types/product';
 
 function formatPrice(price: string | number): string {
   const n = typeof price === 'string' ? parseFloat(price) : price;
-  if (Number.isNaN(n)) return 'Consultar';
-  return new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' }).format(n);
+  if (Number.isNaN(n)) return 'Contact us';
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  DISPONIBLE: 'Disponible',
-  OCUPADO: 'Ocupado',
-  VENDIDO: 'Vendido',
-  EN_CAMINO: 'En camino',
+  DISPONIBLE: 'Available',
+  OCUPADO: 'Booked',
+  VENDIDO: 'Sold',
+  EN_CAMINO: 'On the way',
 };
 
 const STATUS_COLORS: Record<string, string> = {
@@ -78,7 +78,7 @@ const ProductoDetalle: React.FC = () => {
     return (
       <main className="min-h-screen pt-32 pb-16 flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-yellow-50">
         <Loader2 className="w-16 h-16 text-orange-500 animate-spin mb-4" />
-        <p className="text-xl font-bold text-gray-600">Cargando producto...</p>
+        <p className="text-xl font-bold text-gray-600">Loading product...</p>
       </main>
     );
   }
@@ -89,7 +89,7 @@ const ProductoDetalle: React.FC = () => {
         <div className="container mx-auto px-4 text-center py-16">
           <div className="text-7xl mb-6">😕</div>
           <h1 className="text-3xl font-black text-gray-800 mb-4">
-            {error || 'Producto no encontrado'}
+            {error || 'Product not found'}
           </h1>
           <button
             type="button"
@@ -97,7 +97,7 @@ const ProductoDetalle: React.FC = () => {
             className="inline-flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-2xl shadow-xl hover:scale-105 transition-all"
           >
             <ArrowLeft className="w-5 h-5" />
-            Volver a la tienda
+            Back to store
           </button>
         </div>
       </main>
@@ -113,7 +113,7 @@ const ProductoDetalle: React.FC = () => {
           className="inline-flex items-center gap-2 text-orange-600 font-bold hover:text-orange-700 mb-8 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
-          Volver a la tienda
+          Back to store
         </button>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
@@ -128,9 +128,9 @@ const ProductoDetalle: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <div className="text-9xl mb-4">🎪</div>
-                    <span className="text-gray-600 font-semibold">Sin imagen</span>
+                    <span className="text-gray-600 font-semibold">No image</span>
                   </div>
                 )}
 
@@ -187,10 +187,10 @@ const ProductoDetalle: React.FC = () => {
             >
               {STATUS_LABELS[product.status]}
             </div>
-            <div className="text-4xl font-black text-orange-600">
+              <div className="text-4xl font-black text-orange-600">
               {formatPrice(product.price)}
               <span className="text-lg font-bold text-gray-500 ml-2">
-                / {product.saleType === 'COMPRABLE' ? 'venta' : 'alquiler'}
+                / {product.saleType === 'COMPRABLE' ? 'sale' : 'rental'}
               </span>
             </div>
             <div
@@ -204,7 +204,7 @@ const ProductoDetalle: React.FC = () => {
                   className="inline-flex items-center gap-3 px-8 py-4 bg-green-600 text-white font-black rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
                 >
                   <Check className="w-6 h-6" />
-                  Ya en el carrito (ver carrito)
+                  Already in cart (view cart)
                 </Link>
               ) : (
                 <button
@@ -221,7 +221,7 @@ const ProductoDetalle: React.FC = () => {
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
                 >
                   <ShoppingCart className="w-6 h-6" />
-                  Añadir al carrito
+                  Add to cart
                 </button>
               )}
               <button
@@ -235,7 +235,7 @@ const ProductoDetalle: React.FC = () => {
                 ) : (
                   <MessageCircle className="w-6 h-6" />
                 )}
-                Contactar por WhatsApp
+                Contact via WhatsApp
               </button>
               <button
                 type="button"
@@ -244,12 +244,12 @@ const ProductoDetalle: React.FC = () => {
                 className="inline-flex items-center gap-3 px-8 py-4 bg-white border-4 border-orange-400 text-orange-600 font-black rounded-2xl hover:bg-orange-50 transition-all disabled:opacity-70"
               >
                 <Phone className="w-6 h-6" />
-                Llamar
+                Call
               </button>
             </div>
             <div className="pt-6 flex items-center gap-2 text-gray-500 text-sm">
               <MapPin className="w-5 h-5 text-orange-500" />
-              <span>Entrega e instalación según disponibilidad. Consulta por tu zona.</span>
+              <span>Delivery & setup subject to availability. Ask us about your area.</span>
             </div>
           </div>
         </div>

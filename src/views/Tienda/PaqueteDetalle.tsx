@@ -6,8 +6,8 @@ import type { Package as PackageType } from '../../types/product';
 
 function formatPrice(price: string | number): string {
   const n = typeof price === 'string' ? parseFloat(price) : price;
-  if (Number.isNaN(n)) return 'Consultar';
-  return new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' }).format(n);
+  if (Number.isNaN(n)) return 'Contact us';
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 }
 
 const PaqueteDetalle: React.FC = () => {
@@ -30,7 +30,7 @@ const PaqueteDetalle: React.FC = () => {
     return (
       <main className="min-h-screen pt-32 pb-16 flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-yellow-50">
         <Loader2 className="w-16 h-16 text-orange-500 animate-spin mb-4" />
-        <p className="text-xl font-bold text-gray-600">Cargando paquete...</p>
+        <p className="text-xl font-bold text-gray-600">Loading bundle...</p>
       </main>
     );
   }
@@ -39,13 +39,13 @@ const PaqueteDetalle: React.FC = () => {
     return (
       <main className="min-h-screen pt-32 pb-16 bg-gradient-to-b from-orange-50 to-yellow-50">
         <div className="container mx-auto px-4 text-center py-16">
-          <p className="text-xl text-red-600 font-bold mb-6">{error || 'Paquete no encontrado'}</p>
+          <p className="text-xl text-red-600 font-bold mb-6">{error || 'Bundle not found'}</p>
           <Link
             to="/tienda"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-2xl shadow-lg hover:shadow-xl transition-all"
           >
             <ArrowLeft className="w-5 h-5" />
-            Volver a la tienda
+            Back to store
           </Link>
         </div>
       </main>
@@ -58,18 +58,18 @@ const PaqueteDetalle: React.FC = () => {
     <main className="min-h-screen bg-gradient-to-b from-orange-50 via-amber-50 to-yellow-50">
       <section className="pt-28 lg:pt-36 pb-12">
         <div className="container mx-auto px-4">
-          <Link
+            <Link
             to="/tienda"
             className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-bold mb-8"
           >
             <ArrowLeft className="w-5 h-5" />
-            Volver a la tienda
+            Back to store
           </Link>
 
           <div className="max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 text-amber-800 rounded-2xl font-bold mb-6">
               <Package className="w-5 h-5" />
-              Paquete
+              Bundle
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-gray-800 mb-4">{pkg.title}</h1>
             {pkg.description ? (
@@ -79,7 +79,7 @@ const PaqueteDetalle: React.FC = () => {
             <div className="bg-white rounded-3xl shadow-xl border-2 border-orange-100 overflow-hidden mb-8">
               <div className="p-8 md:p-10 border-b-2 border-orange-100">
                 <h2 className="text-lg font-bold text-gray-500 uppercase tracking-wide mb-2">
-                  Incluye
+                  Includes
                 </h2>
                 <ul className="space-y-4">
                   {items.map((item) => (
@@ -96,7 +96,7 @@ const PaqueteDetalle: React.FC = () => {
                             {item.product.title}
                           </Link>
                         ) : (
-                          <span className="font-bold text-gray-600">Producto</span>
+                          <span className="font-bold text-gray-600">Product</span>
                         )}
                         {item.quantity > 1 && (
                           <span className="ml-2 text-gray-500">× {item.quantity}</span>
@@ -113,7 +113,7 @@ const PaqueteDetalle: React.FC = () => {
               </div>
               <div className="p-8 md:p-10 bg-gradient-to-r from-orange-50 to-amber-50 flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div>
-                  <p className="text-sm font-bold text-gray-500 uppercase">Precio del paquete</p>
+                  <p className="text-sm font-bold text-gray-500 uppercase">Bundle price</p>
                   <p className="text-3xl md:text-4xl font-black bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
                     {formatPrice(pkg.specialPrice)}
                   </p>
@@ -123,7 +123,7 @@ const PaqueteDetalle: React.FC = () => {
                   className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 text-white font-black rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all"
                 >
                   <MessageCircle className="w-6 h-6" />
-                  Solicitar información
+                  Request information
                 </Link>
               </div>
             </div>

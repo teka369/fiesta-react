@@ -49,7 +49,7 @@ const Carousel = React.memo<{ slides: CarouselSlide[] }>(function Carousel({ sli
     return (
       <div className="w-full h-full min-h-[280px] bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center rounded-2xl">
         <div className="text-6xl">🎪</div>
-        <span className="ml-2 text-gray-500 font-semibold">Cargando...</span>
+        <span className="ml-2 text-gray-500 font-semibold">Loading...</span>
       </div>
     );
   }
@@ -82,7 +82,7 @@ const Carousel = React.memo<{ slides: CarouselSlide[] }>(function Carousel({ sli
             }}
           />
           <div className="absolute top-3 left-3 bg-red-500/95 text-white font-black px-3 py-1.5 rounded-full text-xs shadow-lg">
-            ¡DESTACADO!
+            FEATURED
           </div>
         </div>
       ))}
@@ -202,7 +202,7 @@ const Header: React.FC = () => {
         ref={heroRef}
         className="relative min-h-[80vh] lg:min-h-[85vh] bg-gradient-to-b from-orange-50 via-amber-50 to-yellow-50 overflow-hidden pt-32 lg:pt-40 pb-8 lg:pb-12"
       >
-        {/* Patrón de fondo estático */}
+        {/* Static background pattern */}
         <div className="absolute inset-0 opacity-20 pointer-events-none" aria-hidden>
           <div
             className="absolute inset-0"
@@ -213,7 +213,7 @@ const Header: React.FC = () => {
           />
         </div>
 
-        {/* Elementos flotantes: clases CSS en lugar de inline animation */}
+        {/* Floating elements */}
         {floatingStyles.map((el, i) => (
           <div
             key={i}
@@ -231,7 +231,7 @@ const Header: React.FC = () => {
           </div>
         ))}
 
-        {/* Orbes de gradiente: menos pesados */}
+        {/* Gradient orbs */}
         <div className="absolute top-10 -left-32 w-80 h-80 bg-orange-300/30 rounded-full blur-3xl pointer-events-none" aria-hidden />
         <div className="absolute bottom-10 -right-32 w-80 h-80 bg-amber-300/30 rounded-full blur-3xl pointer-events-none" aria-hidden />
 
@@ -243,24 +243,24 @@ const Header: React.FC = () => {
                 style={{ transform: `translate(${parallax.x * 1.5}px, ${parallax.y * 1.5}px)` }}
               >
                 <span className="text-lg">⭐</span>
-                <span className="text-sm font-black text-white">¡La Fiesta Más Divertida!</span>
+                <span className="text-sm font-black text-white">The Most Fun Party!</span>
                 <Sparkles className="w-4 h-4 text-yellow-200 animate-spin-slow" />
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight">
                 <div className="mb-2">
                   <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent animate-gradient-bg">
-                    ¡La Mejor
+                    Make Your
                   </span>
                 </div>
                 <div className="mb-2">
                   <span className="relative inline-block">
-                    <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-500 bg-clip-text text-transparent">Fiesta</span>
+                    <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-500 bg-clip-text text-transparent">Party</span>
                     <span className="absolute -top-4 -right-8 text-4xl lg:text-5xl animate-spin-slow">🎉</span>
                   </span>
                 </div>
                 <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-yellow-600 via-amber-500 to-orange-600 bg-clip-text text-transparent">Empieza Aquí!</span>
+                  <span className="bg-gradient-to-r from-yellow-600 via-amber-500 to-orange-600 bg-clip-text text-transparent">Unforgettable!</span>
                   <span className="absolute -bottom-2 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-400 via-yellow-400 to-amber-400 rounded-full opacity-60" />
                 </span>
               </h1>

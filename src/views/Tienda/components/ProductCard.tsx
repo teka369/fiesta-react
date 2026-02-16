@@ -5,10 +5,10 @@ import { useCart } from '../../../context/CartContext';
 import type { Product, ProductStatus } from '../../../types/product';
 
 const STATUS_LABELS: Record<ProductStatus, string> = {
-  DISPONIBLE: 'Disponible',
-  OCUPADO: 'Ocupado',
-  VENDIDO: 'Vendido',
-  EN_CAMINO: 'En camino',
+  DISPONIBLE: 'Available',
+  OCUPADO: 'Booked',
+  VENDIDO: 'Sold',
+  EN_CAMINO: 'On the way',
 };
 
 const STATUS_COLORS: Record<ProductStatus, string> = {
@@ -20,8 +20,8 @@ const STATUS_COLORS: Record<ProductStatus, string> = {
 
 function formatPrice(price: string | number): string {
   const n = typeof price === 'string' ? parseFloat(price) : price;
-  if (Number.isNaN(n)) return 'Consultar';
-  return new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' }).format(n);
+  if (Number.isNaN(n)) return 'Contact us';
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 }
 
 interface ProductCardProps {
@@ -62,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <div className="text-7xl mb-2">🎪</div>
-            <div className="text-sm text-gray-500 font-semibold">Sin imagen</div>
+            <div className="text-sm text-gray-500 font-semibold">No image</div>
           </div>
         )}
 
@@ -95,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 to="/carrito"
                 onClick={(e) => e.stopPropagation()}
                 className="p-2.5 rounded-xl bg-green-100 text-green-700 hover:bg-green-200 transition-all flex items-center justify-center shadow font-bold text-xs"
-                title="Ya en el carrito"
+                title="Already in cart"
               >
                 <Check className="w-5 h-5" />
               </Link>
@@ -104,12 +104,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 type="button"
                 onClick={handleAddToCart}
                 className="p-2.5 rounded-xl bg-orange-100 text-orange-600 hover:bg-orange-200 transition-all flex items-center justify-center shadow"
-                title="Añadir al carrito"
+                title="Add to cart"
               >
                 <ShoppingCart className="w-5 h-5" />
               </button>
             )}
-            <span className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+          <span className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
               <ArrowRight className="w-5 h-5" />
             </span>
           </div>

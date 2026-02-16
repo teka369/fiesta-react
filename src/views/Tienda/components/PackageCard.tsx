@@ -5,8 +5,8 @@ import type { Package as PackageType } from '../../../types/product';
 
 function formatPrice(price: string | number): string {
   const n = typeof price === 'string' ? parseFloat(price) : price;
-  if (Number.isNaN(n)) return 'Consultar';
-  return new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' }).format(n);
+  if (Number.isNaN(n)) return 'Contact us';
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 }
 
 interface PackageCardProps {
@@ -33,11 +33,11 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-black/40 to-transparent">
           <div className="absolute top-4 left-4 px-4 py-2 bg-amber-500/95 text-white rounded-2xl font-black text-sm shadow-lg flex items-center gap-2">
             <Package className="w-4 h-4" />
-            Paquete
+            Bundle
           </div>
           <div className="mt-auto p-4 w-full text-white text-center">
             <p className="text-sm font-bold opacity-90">
-              {itemsCount} {itemsCount === 1 ? 'producto' : 'productos'}
+              {itemsCount} {itemsCount === 1 ? 'item' : 'items'}
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@ const PackageCard: React.FC<PackageCardProps> = ({ pkg }) => {
             {formatPrice(pkg.specialPrice)}
           </span>
           <span className="inline-flex items-center gap-1 text-orange-600 font-bold group-hover:gap-2 transition-all">
-            Ver paquete
+            View bundle
             <ArrowRight className="w-5 h-5" />
           </span>
         </div>

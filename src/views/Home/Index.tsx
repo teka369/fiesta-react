@@ -23,7 +23,7 @@ import {
   Quote,
   Loader2,
 } from 'lucide-react';
-import { fetchProducts, fetchCategories, fetchProductById } from '../../lib/api';
+import { fetchProducts, fetchCategories, fetchProductById, fetchSettings, type SiteSettings } from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
 import type { Product } from '../../types/product';
 import type { Category } from '../../types/product';
@@ -50,32 +50,32 @@ const WelcomeSection: React.FC = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full border-2 border-orange-300 shadow-lg animate-bounce-slow">
             <Sparkles className="w-5 h-5 text-orange-500" />
-            <span className="font-bold text-orange-700">Bienvenido a Sunny Party Rentals</span>
+            <span className="font-bold text-orange-700">Welcome to Sunny Party Rentals</span>
           </div>
 
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
             <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-              Hacemos que Cada Celebración
+              We Make Every Celebration
             </span>
             <br />
-            <span className="text-gray-800">Sea Inolvidable 🎉</span>
+            <span className="text-gray-800">Truly Unforgettable 🎉</span>
           </h2>
 
           {/* Description */}
           <p className="text-xl md:text-2xl text-gray-600 leading-relaxed">
-            Con más de <span className="font-bold text-orange-600">12 años</span> creando momentos mágicos, 
-            somos tu mejor aliado para fiestas infantiles espectaculares. Desde trampolines gigantes 
-            hasta decoraciones de ensueño, <span className="font-bold text-orange-600">tenemos todo lo que necesitas</span>.
+            With more than <span className="font-bold text-orange-600">12 years</span> creating magical
+            moments, we are your best partner for unforgettable parties. From giant inflatables
+            to dreamy decor, <span className="font-bold text-orange-600">we have everything you need</span>.
           </p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
             {[
-              { icon: Users, number: '5,000+', label: 'Fiestas Realizadas' },
-              { icon: Star, number: '4.9/5', label: 'Rating Promedio' },
-              { icon: Award, number: '50+', label: 'Productos Únicos' },
-              { icon: Heart, number: '100%', label: 'Satisfacción' },
+              { icon: Users, number: '5,000+', label: 'Events hosted' },
+              { icon: Star, number: '4.9/5', label: 'Average rating' },
+              { icon: Award, number: '50+', label: 'Unique rentals' },
+              { icon: Heart, number: '100%', label: 'Happiness guaranteed' },
             ].map((stat, index) => (
               <div
                 key={index}
@@ -141,7 +141,7 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Contenedor con tamaño fijo para que la imagen/placeholder siempre ocupen espacio */}
+          {/* Fixed-size container so image/placeholder always takes space */}
           <div className="relative w-full aspect-[4/3] max-h-[480px] lg:max-h-[560px] rounded-[3rem] overflow-hidden shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-amber-400 to-yellow-400 p-2 lg:p-3 rounded-[3rem]">
               <div className="w-full h-full bg-white rounded-[2.5rem] lg:rounded-[2.7rem] overflow-hidden flex items-center justify-center">
@@ -157,14 +157,14 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
                   <div className="w-full h-full min-h-[200px] bg-gradient-to-br from-orange-100 to-yellow-100 flex flex-col items-center justify-center gap-4 p-6 text-center">
                     <span className="text-8xl" role="img" aria-hidden>🏰</span>
                     <span className="text-xl lg:text-2xl font-bold text-gray-700">
-                      {featuredProduct?.title ?? 'Producto destacado'}
+                      {featuredProduct?.title ?? 'Featured product'}
                     </span>
                   </div>
                 )}
               </div>
             </div>
             <div className="absolute top-4 right-4 lg:top-6 lg:right-6 bg-red-500 text-white font-black px-4 py-2 lg:px-6 lg:py-3 rounded-full rotate-12 shadow-2xl border-4 border-white text-sm lg:text-base">
-              ¡FAVORITO! 👑
+              FAN FAVORITE 👑
             </div>
             <div className="absolute -bottom-4 -left-4 text-5xl lg:text-6xl animate-bounce pointer-events-none" style={{ animationDuration: '3s' }} aria-hidden>🎈</div>
             <div className="absolute -top-4 -right-4 text-5xl lg:text-6xl animate-bounce pointer-events-none" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} aria-hidden>⭐</div>
@@ -173,13 +173,15 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
           <div className="space-y-6">
             {token && (
               <div className="p-4 bg-white rounded-xl border-2 border-orange-200">
-                <label className="block text-sm font-bold text-gray-700 mb-2">Admin: producto destacado en esta sección</label>
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  Admin: featured product for this section
+                </label>
                 <select
                   value={pendingId}
                   onChange={(e) => setPendingId(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border-2 border-orange-200 font-semibold mb-3"
                 >
-                  <option value="">— Seleccionar producto —</option>
+                  <option value="">— Select product —</option>
                   {products.filter((p) => p.isActive !== false).map((p) => (
                     <option key={p.id} value={p.id}>{p.title}</option>
                   ))}
@@ -190,20 +192,22 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
                     onClick={handleAcceptOrReplace}
                     className="w-full py-3 rounded-xl font-black text-white bg-orange-500 hover:bg-orange-600 transition-colors"
                   >
-                    {hasFeatured ? 'Reemplazar' : 'Aceptar'}
+                    {hasFeatured ? 'Replace featured product' : 'Set featured product'}
                   </button>
                 )}
               </div>
             )}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-full font-bold text-sm">
               <TrendingUp className="w-4 h-4" />
-              El Más Solicitado
+              Most requested rental
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
-              <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">El Mejor Servicio</span>
+              <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
+                The Best Service
+              </span>
               <br />
-              <span className="text-gray-800">Para Tu Fiesta</span>
+              <span className="text-gray-800">For Your Party</span>
             </h2>
 
             <p className="text-xl text-gray-600 leading-relaxed">
@@ -214,19 +218,19 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
                 </>
               ) : (
                 <>
-                  Nuestro producto estrella ha traído sonrisas a miles de niños.
-                  Con <span className="font-bold text-orange-600">instalación profesional</span> y
-                  <span className="font-bold text-orange-600"> calidad premium</span>.
+                  Our star rental has brought smiles to thousands of kids.
+                  With <span className="font-bold text-orange-600">professional setup</span> and
+                  <span className="font-bold text-orange-600"> premium quality</span>.
                 </>
               )}
             </p>
 
             <div className="space-y-4">
               {[
-                { icon: Shield, text: 'Certificado de Seguridad' },
-                { icon: Truck, text: 'Entrega e Instalación Gratis' },
-                { icon: Clock, text: 'Disponible 24/7' },
-                { icon: ThumbsUp, text: 'Garantía de Diversión' },
+                { icon: Shield, text: 'Safety certified' },
+                { icon: Truck, text: 'Free delivery & setup' },
+                { icon: Clock, text: 'Available 24/7' },
+                { icon: ThumbsUp, text: 'Fun guaranteed' },
               ].map((feature, index) => (
                 <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:translate-x-2">
                   <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-full flex items-center justify-center shadow-lg">
@@ -243,7 +247,7 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
                 className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
               >
                 <Calendar className="w-6 h-6" />
-                Reservar Ahora
+                Book now
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </Link>
             )}
@@ -259,11 +263,11 @@ const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => 
 // ============================================
 function formatPrice(price: string | number): string {
   const n = typeof price === 'string' ? parseFloat(price) : price;
-  if (Number.isNaN(n)) return 'Consultar';
-  return new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' }).format(n);
+  if (Number.isNaN(n)) return 'Contact us';
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 }
 
-const BADGES = ['Popular', 'Nuevo', 'Oferta', 'Destacado'];
+const BADGES = ['Popular', 'New', 'Deal', 'Featured'];
 const BADGE_COLORS = ['bg-red-500', 'bg-green-500', 'bg-orange-500', 'bg-purple-500'];
 
 const FeaturedProductsSection: React.FC<{ products: Product[] }> = ({ products }) => {
@@ -287,14 +291,16 @@ const FeaturedProductsSection: React.FC<{ products: Product[] }> = ({ products }
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full border-2 border-orange-200 mb-6">
             <Gift className="w-5 h-5 text-orange-500" />
-            <span className="font-bold text-orange-700">Productos Destacados</span>
+            <span className="font-bold text-orange-700">Featured Rentals</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">Lo Más Solicitado</span>
-            <br />
-            <span className="text-gray-800">Por Nuestros Clientes</span>
+            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
+              Most Loved by Families
+            </span>
           </h2>
-          <p className="text-xl text-gray-600">Descubre los favoritos de nuestras familias felices</p>
+          <p className="text-xl text-gray-600">
+            Discover the rentals our happy families book again and again.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -314,12 +320,14 @@ const FeaturedProductsSection: React.FC<{ products: Product[] }> = ({ products }
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                       <div className="text-7xl mb-4">🎪</div>
-                      <div className="text-sm text-gray-500">Sin imagen</div>
+                      <div className="text-sm text-gray-500">No image</div>
                     </div>
                   )}
                   <div className={`absolute top-4 right-4 ${badgeColor} text-white font-black px-4 py-2 rounded-full text-sm shadow-lg`}>{badge}</div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                    <span className="px-6 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg">Ver Detalles</span>
+                    <span className="px-6 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg">
+                      View details
+                    </span>
                   </div>
                 </div>
                 <div className="p-6 space-y-3">
@@ -343,7 +351,7 @@ const FeaturedProductsSection: React.FC<{ products: Product[] }> = ({ products }
             to="/tienda"
             className="inline-block px-10 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
           >
-            Ver Todos Los Productos →
+            View all rentals →
           </Link>
         </div>
       </div>
@@ -358,39 +366,39 @@ const WhyChooseUsSection: React.FC = () => {
   const reasons = [
     {
       icon: Award,
-      title: '12+ Años de Experiencia',
-      description: 'Somos líderes en el mercado con miles de fiestas exitosas',
-      color: 'from-orange-400 to-red-500'
+      title: '12+ Years of Experience',
+      description: 'Industry-leading team with thousands of successful events.',
+      color: 'from-orange-400 to-red-500',
     },
     {
       icon: Shield,
-      title: '100% Certificado y Seguro',
-      description: 'Todos nuestros productos cumplen con estándares de seguridad',
-      color: 'from-blue-400 to-cyan-500'
+      title: 'Safety First',
+      description: 'All rentals meet strict safety standards and inspections.',
+      color: 'from-blue-400 to-cyan-500',
     },
     {
       icon: Truck,
-      title: 'Entrega e Instalación Gratis',
-      description: 'Nos encargamos de todo, tú solo disfruta',
-      color: 'from-green-400 to-emerald-500'
+      title: 'Free Delivery & Setup',
+      description: 'We handle everything so you can relax and enjoy the party.',
+      color: 'from-green-400 to-emerald-500',
     },
     {
       icon: Clock,
-      title: 'Disponibilidad 24/7',
-      description: 'Respuesta rápida en menos de 1 hora',
-      color: 'from-purple-400 to-pink-500'
+      title: '24/7 Availability',
+      description: 'Fast response times and flexible schedules.',
+      color: 'from-purple-400 to-pink-500',
     },
     {
       icon: Zap,
-      title: 'Limpieza Premium',
-      description: 'Desinfección completa entre cada evento',
-      color: 'from-yellow-400 to-orange-500'
+      title: 'Premium Cleaning',
+      description: 'Thorough cleaning and sanitizing between every event.',
+      color: 'from-yellow-400 to-orange-500',
     },
     {
       icon: Heart,
-      title: 'Garantía de Satisfacción',
-      description: 'Si no quedas feliz, te devolvemos tu dinero',
-      color: 'from-pink-400 to-red-500'
+      title: 'Happiness Guaranteed',
+      description: 'If you are not thrilled, we will make it right.',
+      color: 'from-pink-400 to-red-500',
     },
   ];
 
@@ -409,14 +417,14 @@ const WhyChooseUsSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border-2 border-orange-300 shadow-lg mb-6">
             <Star className="w-5 h-5 text-orange-500 fill-orange-500" />
-            <span className="font-bold text-orange-700">Por Qué Elegirnos</span>
+            <span className="font-bold text-orange-700">Why Choose Sunny Party</span>
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="text-gray-800">Somos La Mejor Opción</span>
+            <span className="text-gray-800">The Best Choice</span>
             <br />
             <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              Para Tu Celebración
+              For Your Next Celebration
             </span>
           </h2>
         </div>
@@ -473,12 +481,15 @@ const ExploreRentalsSection: React.FC<{ categories: Category[]; productCountByCa
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">Explora Nuestros</span>
+            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
+              Explore Our
+            </span>
             <br />
-            <span className="text-gray-800">Alquileres</span>
+            <span className="text-gray-800">Party Rentals</span>
           </h2>
           <p className="text-xl text-gray-600">
-            Tenemos más de <span className="font-bold text-orange-600">{totalProducts}+ productos</span> para hacer tu fiesta perfecta
+            We offer more than <span className="font-bold text-orange-600">{totalProducts}+ items</span> to
+            make your celebration perfect.
           </p>
         </div>
 
@@ -496,7 +507,7 @@ const ExploreRentalsSection: React.FC<{ categories: Category[]; productCountByCa
                 <div className="text-6xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">{icon}</div>
                 <h3 className="text-lg font-black text-gray-800 mb-2">{category.name}</h3>
                 <div className={`inline-block px-4 py-1 bg-gradient-to-r ${color} text-white font-bold rounded-full text-sm`}>
-                  {count} {count === 1 ? 'producto' : 'opciones'}
+                  {count} {count === 1 ? 'item' : 'options'}
                 </div>
                 <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-300`} />
               </Link>
@@ -509,7 +520,7 @@ const ExploreRentalsSection: React.FC<{ categories: Category[]; productCountByCa
             to="/tienda"
             className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
           >
-            Ver Catálogo Completo
+            View full catalog
             <ArrowRight className="w-6 h-6" />
           </Link>
         </div>
@@ -521,7 +532,7 @@ const ExploreRentalsSection: React.FC<{ categories: Category[]; productCountByCa
 // ============================================
 // 🗺️ SECCIÓN 6: ÁREAS DE ENTREGA
 // ============================================
-const DeliveryAreasSection: React.FC = () => {
+const DeliveryAreasSection: React.FC<{ googleMapsEmbedUrl?: string | null }> = ({ googleMapsEmbedUrl }) => {
   const states = [
     'California', 'Texas', 'Florida', 'New York', 
     'Illinois', 'Pennsylvania', 'Ohio', 'Georgia'
@@ -540,21 +551,21 @@ const DeliveryAreasSection: React.FC = () => {
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
-              <span className="text-gray-800">Entregamos En</span>
+              <span className="text-gray-800">We Deliver</span>
               <br />
               <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                Todo Estados Unidos
+                Across the United States
               </span>
             </h2>
 
             <p className="text-xl text-gray-600 leading-relaxed">
-              Llevamos alegría a <span className="font-bold text-blue-600">todo el país</span>. 
-              Consulta disponibilidad en tu área y agenda tu entrega gratuita.
+              We bring joy <span className="font-bold text-blue-600">all across the country</span>.
+              Check availability in your area and book your free delivery.
             </p>
 
             {/* States List */}
             <div className="space-y-3">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Estados Principales:</h3>
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Main states:</h3>
               <div className="grid grid-cols-2 gap-3">
                 {states.map((state, index) => (
                   <div
@@ -573,41 +584,40 @@ const DeliveryAreasSection: React.FC = () => {
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
             >
               <Phone className="w-6 h-6" />
-              Consulta Tu Área
+              Check your area
             </Link>
           </div>
 
-          {/* Right - Map Placeholder */}
+          {/* Right - Map */}
           <div className="relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-              {/* 
-                ============================================
-                🗺️ GOOGLE MAPS AQUÍ
-                ============================================
-                Reemplaza con tu componente de Google Maps
-                o iframe de Google Maps embebido
-              */}
-              <div className="aspect-[4/3] bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center relative">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: `radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+              {googleMapsEmbedUrl ? (
+                <iframe
+                  src={googleMapsEmbedUrl}
+                  width="100%"
+                  height="400"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Business location"
+                />
+              ) : (
+                <div className="aspect-[4/3] bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center relative">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
                                    radial-gradient(circle at 70% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)`,
-                }}></div>
-                <div className="text-center space-y-4 relative z-10">
-                  <MapPin className="w-20 h-20 text-blue-600 mx-auto" />
-                  <div className="text-2xl font-bold text-gray-700">Mapa de Google</div>
-                  <div className="text-gray-500">Integra tu Google Maps API aquí</div>
-                  <div className="text-sm text-gray-400 max-w-xs mx-auto">
-                    <code className="bg-white/80 px-3 py-1 rounded">
-                      &lt;GoogleMap /&gt;
-                    </code>
+                    }}
+                  ></div>
+                  <div className="text-center space-y-4 relative z-10">
+                    <MapPin className="w-20 h-20 text-blue-600 mx-auto" />
+                    <div className="text-2xl font-bold text-gray-700">Google Maps</div>
+                    <div className="text-gray-500">Add your Google Maps embed URL in the admin settings.</div>
                   </div>
                 </div>
-              </div>
-
-              {/* Decorative pins */}
-              <div className="absolute top-1/4 left-1/4 w-8 h-8 bg-red-500 rounded-full shadow-lg animate-bounce"></div>
-              <div className="absolute top-1/3 right-1/3 w-8 h-8 bg-blue-500 rounded-full shadow-lg animate-bounce" style={{ animationDelay: '0.5s' }}></div>
-              <div className="absolute bottom-1/3 left-1/2 w-8 h-8 bg-green-500 rounded-full shadow-lg animate-bounce" style={{ animationDelay: '1s' }}></div>
+              )}
             </div>
           </div>
         </div>
@@ -682,16 +692,14 @@ const TestimonialsSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-full border-2 border-purple-300 mb-6">
             <Heart className="w-5 h-5 text-purple-600 fill-purple-600" />
-            <span className="font-bold text-purple-700">Testimonios</span>
+            <span className="font-bold text-purple-700">Testimonials</span>
           </div>
 
-            
-
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="text-gray-800">Lo Que Dicen</span>
+            <span className="text-gray-800">What Families Say</span>
             <br />
             <span className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
-              Nuestras Familias Felices
+              About Sunny Party
             </span>
           </h2>
 
@@ -700,7 +708,7 @@ const TestimonialsSection: React.FC = () => {
               <Star key={star} className="w-8 h-8 fill-yellow-400 text-yellow-400" />
             ))}
             <span className="text-2xl font-bold text-gray-700 ml-3">4.9/5</span>
-            <span className="text-gray-500">(500+ reseñas)</span>
+            <span className="text-gray-500">(500+ reviews)</span>
           </div>
         </div>
 
@@ -796,15 +804,18 @@ const Main: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
 
   useEffect(() => {
     Promise.all([
       fetchProducts({ limit: 50, sortBy: 'createdAt', sortOrder: 'desc' }).then((r) => r.data ?? []),
       fetchCategories().then((c) => (Array.isArray(c) ? c : [])),
+      fetchSettings().catch(() => ({ googleMapsEmbedUrl: null })),
     ])
-      .then(([data, cats]) => {
+      .then(([data, cats, site]) => {
         setProducts(data);
         setCategories(cats);
+        setSettings(site);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -839,7 +850,7 @@ const Main: React.FC = () => {
           totalProducts={totalProducts}
         />
       )}
-      <DeliveryAreasSection />
+      <DeliveryAreasSection googleMapsEmbedUrl={settings?.googleMapsEmbedUrl ?? undefined} />
       <TestimonialsSection />
       <QuestionsSection />
     </main>

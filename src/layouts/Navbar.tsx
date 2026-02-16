@@ -32,20 +32,20 @@ const Navbar: React.FC = () => {
   }, []);
 
   const infoLinks = [
-    { name: 'Sobre Nosotros', href: '/nosotros', emoji: '⭐' },
-    { name: 'Preguntas Frecuentes', href: '/#preguntas', emoji: '❓' },
-    { name: 'Contáctenos', href: '/contact', emoji: '📞' },
+    { name: 'About Us', href: '/nosotros', emoji: '⭐' },
+    { name: 'FAQ', href: '/#preguntas', emoji: '❓' },
+    { name: 'Contact Us', href: '/contact', emoji: '📞' },
   ];
 
   const navItemsSinLogin = [
     { name: 'Home', href: '/', emoji: '🏠' },
-    { name: 'Tienda', href: '/tienda', emoji: '🛒' },
+    { name: 'Store', href: '/tienda', emoji: '🛒' },
     ...infoLinks,
   ];
 
   const navItemsConLogin = [
     { name: 'Home', href: '/', emoji: '🏠' },
-    { name: 'Tienda', href: '/tienda', emoji: '🛒' },
+    { name: 'Store', href: '/tienda', emoji: '🛒' },
   ];
   const navItems = token ? navItemsConLogin : navItemsSinLogin;
 
@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
 
   return (
     <header className="fixed w-full z-50 transition-all duration-500">
-      {/* Top Bar - Colores del sol */}
+      {/* Top Bar */}
       <div 
         className={`bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-400 transition-all duration-500 ${
           isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100'
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="hidden sm:inline text-xs font-bold bg-white/30 px-3 py-1 rounded-full">
-                ✨ ¡Envío GRATIS! ✨
+                ✨ FREE DELIVERY ✨
               </span>
               <a 
                 href="#" 
@@ -109,7 +109,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Navigation - Colores cálidos del sol */}
+      {/* Main Navigation */}
       <nav 
         className={`transition-all duration-500 ${
           isScrolled 
@@ -198,7 +198,7 @@ const Navbar: React.FC = () => {
                       className="relative px-4 xl:px-5 py-3 font-bold rounded-2xl transition-all duration-300 flex items-center gap-2 text-gray-700 hover:text-orange-600"
                     >
                       <span className="text-lg">📋</span>
-                      <span>Información</span>
+                      <span>Info</span>
                       <ChevronDown className={`w-4 h-4 transition-transform ${infoDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
                     {infoDropdownOpen && (
@@ -224,7 +224,7 @@ const Navbar: React.FC = () => {
                     className="relative px-4 xl:px-5 py-3 font-bold rounded-2xl transition-all duration-300 flex items-center gap-2 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white shadow-lg hover:scale-105"
                   >
                     <LayoutDashboard className="w-5 h-5" />
-                    Administrar tienda
+                    Manage Store
                   </Link>
                   <button
                     type="button"
@@ -232,7 +232,7 @@ const Navbar: React.FC = () => {
                     className="px-4 xl:px-5 py-3 font-bold rounded-2xl border-2 border-orange-200 text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-all duration-300 flex items-center gap-2"
                   >
                     <LogOut className="w-5 h-5" />
-                    Cerrar sesión
+                    Log out
                   </button>
                 </>
               )}
@@ -252,7 +252,7 @@ const Navbar: React.FC = () => {
                 }`}>
                   <input
                     type="text"
-                    placeholder="Buscar trampolín, mesa..."
+                    placeholder="Search bounce house, table..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onFocus={() => setIsSearchFocused(true)}
@@ -299,7 +299,7 @@ const Navbar: React.FC = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="🔍 Buscar..."
+                placeholder="🔍 Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-full bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 border-2 border-orange-300 font-semibold outline-none focus:border-orange-500 focus:shadow-lg transition-all duration-300"
@@ -354,7 +354,7 @@ const Navbar: React.FC = () => {
                     className="px-5 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-2xl flex items-center justify-center gap-2"
                   >
                     <LayoutDashboard className="w-5 h-5" />
-                    Administrar tienda
+                    Manage store
                   </Link>
                   <button
                     type="button"
@@ -362,7 +362,7 @@ const Navbar: React.FC = () => {
                     className="px-5 py-4 font-bold rounded-2xl border-2 border-orange-200 text-gray-700 flex items-center gap-2"
                   >
                     <LogOut className="w-5 h-5" />
-                    Cerrar sesión
+                    Log out
                   </button>
                 </>
               )}

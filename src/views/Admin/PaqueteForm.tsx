@@ -68,7 +68,7 @@ export default function PaqueteForm({
     setError('');
     const priceNum = parseFloat(specialPrice);
     if (Number.isNaN(priceNum) || priceNum < 0) {
-      setError('Precio debe ser un número mayor o igual a 0');
+      setError('Price must be a number greater or equal to 0');
       return;
     }
     const validItems = items.filter((i) => i.productId && i.quantity > 0);
@@ -81,7 +81,7 @@ export default function PaqueteForm({
         items: validItems.length ? validItems : undefined,
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al guardar');
+      setError(err instanceof Error ? err.message : 'Error while saving');
     }
   };
 
@@ -91,18 +91,18 @@ export default function PaqueteForm({
         <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 font-semibold">{error}</div>
       )}
       <div>
-        <label className="block text-sm font-bold text-gray-700 mb-1">Título del paquete *</label>
+        <label className="block text-sm font-bold text-gray-700 mb-1">Bundle title *</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
           className="w-full px-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none"
-          placeholder="Ej: Fiesta infantil completa"
+          placeholder="E.g. Complete kids party"
         />
       </div>
       <div>
-        <label className="block text-sm font-bold text-gray-700 mb-1">Descripción (opcional)</label>
+        <label className="block text-sm font-bold text-gray-700 mb-1">Description (optional)</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -111,7 +111,7 @@ export default function PaqueteForm({
         />
       </div>
       <div>
-        <label className="block text-sm font-bold text-gray-700 mb-1">Precio especial (USD) *</label>
+        <label className="block text-sm font-bold text-gray-700 mb-1">Special price (USD) *</label>
         <input
           type="number"
           step="0.01"
@@ -131,15 +131,15 @@ export default function PaqueteForm({
           className="w-5 h-5 rounded border-orange-300 text-orange-500"
         />
         <label htmlFor="pkgActive" className="font-bold text-gray-700">
-          Activo (visible)
+          Active (visible)
         </label>
       </div>
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-bold text-gray-700">Productos en el paquete</label>
+          <label className="block text-sm font-bold text-gray-700">Products in this bundle</label>
           <button type="button" onClick={addItem} className="text-sm font-bold text-orange-600 hover:underline flex items-center gap-1">
             <Plus className="w-4 h-4" />
-            Añadir producto
+            Add product
           </button>
         </div>
         <div className="space-y-3">
@@ -150,7 +150,7 @@ export default function PaqueteForm({
                 onChange={(e) => updateItem(index, 'productId', e.target.value)}
                 className="flex-1 px-4 py-2 rounded-lg border border-gray-200 focus:border-orange-400 outline-none"
               >
-                <option value="">Seleccionar producto</option>
+                <option value="">Select product</option>
                 {products.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.title}
@@ -172,16 +172,20 @@ export default function PaqueteForm({
         </div>
       </div>
       <div className="flex gap-4">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-xl shadow-lg disabled:opacity-70"
-        >
-          {isSubmitting ? 'Guardando...' : 'Guardar'}
-        </button>
-        <button type="button" onClick={onCancel} className="px-6 py-3 border-2 border-gray-300 rounded-xl font-bold text-gray-600 hover:bg-gray-50">
-          Cancelar
-        </button>
+          <button
+        type="submit"
+        disabled={isSubmitting}
+        className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-xl shadow-lg disabled:opacity-70"
+      >
+        {isSubmitting ? 'Saving...' : 'Save'}
+      </button>
+      <button
+        type="button"
+        onClick={onCancel}
+        className="px-6 py-3 border-2 border-gray-300 rounded-xl font-bold text-gray-600 hover:bg-gray-50"
+      >
+        Cancel
+      </button>
       </div>
     </form>
   );

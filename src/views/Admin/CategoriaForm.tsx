@@ -29,13 +29,18 @@ export default function CategoriaForm({
     e.preventDefault();
     setError('');
     if (!name.trim()) {
-      setError('El nombre es obligatorio');
+      setError('Name is required');
       return;
     }
     try {
-      await onSubmit({ name: name.trim(), description: description.trim() || undefined, sortOrder, isActive });
+      await onSubmit({
+        name: name.trim(),
+        description: description.trim() || undefined,
+        sortOrder,
+        isActive,
+      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al guardar');
+      setError(err instanceof Error ? err.message : 'Error while saving');
     }
   };
 
@@ -45,18 +50,18 @@ export default function CategoriaForm({
         <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 font-semibold">{error}</div>
       )}
       <div>
-        <label className="block text-sm font-bold text-gray-700 mb-1">Nombre *</label>
+        <label className="block text-sm font-bold text-gray-700 mb-1">Name *</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
           className="w-full px-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none"
-          placeholder="Ej: Inflables, Utensilios de cocina"
+          placeholder="E.g. Inflatables, Tables"
         />
       </div>
       <div>
-        <label className="block text-sm font-bold text-gray-700 mb-1">Descripción (opcional)</label>
+        <label className="block text-sm font-bold text-gray-700 mb-1">Description (optional)</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -66,7 +71,7 @@ export default function CategoriaForm({
       </div>
       <div className="flex flex-wrap gap-6">
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-1">Orden</label>
+          <label className="block text-sm font-bold text-gray-700 mb-1">Order</label>
           <input
             type="number"
             min={0}
@@ -84,7 +89,7 @@ export default function CategoriaForm({
             className="w-5 h-5 rounded border-orange-300 text-orange-500"
           />
           <label htmlFor="catActive" className="font-bold text-gray-700">
-            Activa (visible)
+            Active (visible)
           </label>
         </div>
       </div>
@@ -94,10 +99,14 @@ export default function CategoriaForm({
           disabled={isSubmitting}
           className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-xl shadow-lg disabled:opacity-70"
         >
-          {isSubmitting ? 'Guardando...' : 'Guardar'}
+          {isSubmitting ? 'Saving...' : 'Save'}
         </button>
-        <button type="button" onClick={onCancel} className="px-6 py-3 border-2 border-gray-300 rounded-xl font-bold text-gray-600 hover:bg-gray-50">
-          Cancelar
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-6 py-3 border-2 border-gray-300 rounded-xl font-bold text-gray-600 hover:bg-gray-50"
+        >
+          Cancel
         </button>
       </div>
     </form>

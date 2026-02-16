@@ -5,8 +5,8 @@ import { useCart } from '../../context/CartContext';
 
 function formatPrice(price: string | number): string {
   const n = typeof price === 'string' ? parseFloat(price) : price;
-  if (Number.isNaN(n)) return 'Consultar';
-  return new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' }).format(n);
+  if (Number.isNaN(n)) return 'Contact us';
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 }
 
 const CarritoIndex: React.FC = () => {
@@ -25,7 +25,7 @@ const CarritoIndex: React.FC = () => {
           className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-bold mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
-          Seguir comprando
+          Continue shopping
         </Link>
 
         <div className="flex items-center gap-3 mb-10">
@@ -33,25 +33,25 @@ const CarritoIndex: React.FC = () => {
             <ShoppingCart className="w-8 h-8 text-orange-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-black text-gray-800">Carrito de compra</h1>
+            <h1 className="text-3xl font-black text-gray-800">Shopping cart</h1>
             <p className="text-gray-600">
               {totalItems === 0
-                ? 'Tu carrito está vacío'
-                : `${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`}
+                ? 'Your cart is empty'
+                : `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`}
             </p>
           </div>
         </div>
 
         {items.length === 0 ? (
-          <div className="bg-white rounded-3xl shadow-xl border-2 border-orange-100 p-16 text-center">
+            <div className="bg-white rounded-3xl shadow-xl border-2 border-orange-100 p-16 text-center">
             <div className="text-7xl mb-4">🛒</div>
-            <h2 className="text-xl font-black text-gray-800 mb-2">No hay productos en el carrito</h2>
-            <p className="text-gray-600 mb-6">Añade productos desde la tienda para reservar o comprar.</p>
+            <h2 className="text-xl font-black text-gray-800 mb-2">No items in your cart</h2>
+            <p className="text-gray-600 mb-6">Add items from the store to reserve or purchase.</p>
             <Link
               to="/tienda"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-2xl shadow-lg hover:shadow-xl"
             >
-              Ir a la tienda
+              Go to store
             </Link>
           </div>
         ) : (
@@ -82,7 +82,9 @@ const CarritoIndex: React.FC = () => {
                       >
                         {item.product.title}
                       </Link>
-                      <p className="text-orange-600 font-bold mt-1">{formatPrice(item.product.price)} c/u</p>
+                      <p className="text-orange-600 font-bold mt-1">
+                        {formatPrice(item.product.price)} ea.
+                      </p>
                       <div className="flex items-center gap-2 mt-2">
                         <div className="flex items-center rounded-xl border-2 border-orange-200 overflow-hidden">
                           <button
@@ -107,7 +109,7 @@ const CarritoIndex: React.FC = () => {
                           type="button"
                           onClick={() => removeItem(item.productId)}
                           className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
-                          title="Quitar"
+                          title="Remove"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -123,9 +125,11 @@ const CarritoIndex: React.FC = () => {
 
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl shadow-xl border-2 border-orange-100 p-6 sticky top-28">
-                <h2 className="text-xl font-black text-gray-800 mb-4">Resumen</h2>
+                <h2 className="text-xl font-black text-gray-800 mb-4">Summary</h2>
                 <div className="flex justify-between text-gray-600 mb-2">
-                  <span>Subtotal ({totalItems} {totalItems === 1 ? 'producto' : 'productos'})</span>
+                  <span>
+                    Subtotal ({totalItems} {totalItems === 1 ? 'item' : 'items'})
+                  </span>
                   <span className="font-bold">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="border-t-2 border-orange-100 pt-4 mt-4">
@@ -137,7 +141,7 @@ const CarritoIndex: React.FC = () => {
                     to="/contact"
                     className="block w-full text-center py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 text-white font-black rounded-2xl shadow-lg hover:shadow-xl"
                   >
-                    Solicitar / Reservar
+                    Request / Reserve
                   </Link>
                 </div>
               </div>

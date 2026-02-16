@@ -38,20 +38,20 @@ const ContactHeroSection: React.FC = () => {
         <div className="text-center max-w-4xl mx-auto space-y-8">
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 text-white rounded-full font-black shadow-lg border-4 border-white/50">
             <MessageCircle className="w-6 h-6" />
-            Contáctanos
+            Contact Us
           </div>
 
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
             <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-              Hablemos de
+              Let&apos;s Talk About
             </span>
             <br />
-            <span className="text-gray-800">Tu Próxima Fiesta 🎉</span>
+            <span className="text-gray-800">Your Next Party 🎉</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-            Estamos aquí para ayudarte a crear la celebración perfecta. <br />
-            <span className="font-bold text-orange-600">¡Respuesta garantizada en menos de 1 hora!</span>
+            We&apos;re here to help you create the perfect celebration. <br />
+            <span className="font-bold text-orange-600">Response guaranteed within 1 hour.</span>
           </p>
 
           {/* Quick contact buttons */}
@@ -115,21 +115,21 @@ const ContactFormSection: React.FC = () => {
           <div className="relative">
             <div className="sticky top-32">
               <h2 className="text-4xl lg:text-5xl font-black mb-6">
-                <span className="text-gray-800">Envíanos un</span>
+                <span className="text-gray-800">Send us a</span>
                 <br />
                 <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-                  Mensaje
+                  Message
                 </span>
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Completa el formulario y nos pondremos en contacto contigo lo antes posible.
+                Fill out the form and we&apos;ll get back to you as soon as possible.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div className="group">
                   <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Nombre Completo *
+                    Full Name *
                   </label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
@@ -140,7 +140,7 @@ const ContactFormSection: React.FC = () => {
                       onChange={handleChange}
                       required
                       className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-orange-400 focus:ring-4 focus:ring-orange-100 outline-none transition-all duration-300 font-semibold"
-                      placeholder="Juan Pérez"
+                      placeholder="John Smith"
                     />
                   </div>
                 </div>
@@ -167,7 +167,7 @@ const ContactFormSection: React.FC = () => {
                 {/* Phone */}
                 <div className="group">
                   <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Teléfono *
+                    Phone *
                   </label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
@@ -186,7 +186,7 @@ const ContactFormSection: React.FC = () => {
                 {/* Event Date */}
                 <div className="group">
                   <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Fecha del Evento
+                    Event Date
                   </label>
                   <div className="relative">
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
@@ -203,7 +203,7 @@ const ContactFormSection: React.FC = () => {
                 {/* Event Type */}
                 <div className="group">
                   <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Tipo de Evento
+                    Event Type
                   </label>
                   <div className="relative">
                     <Building className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
@@ -213,13 +213,12 @@ const ContactFormSection: React.FC = () => {
                       onChange={handleChange}
                       className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-orange-400 focus:ring-4 focus:ring-orange-100 outline-none transition-all duration-300 font-semibold appearance-none bg-white"
                     >
-                      <option value="">Selecciona un tipo</option>
-                      <option value="cumpleaños">Cumpleaños Infantil</option>
-                      <option value="bautizo">Bautizo</option>
-                      <option value="comunion">Primera Comunión</option>
-                      <option value="graduacion">Graduación</option>
-                      <option value="corporativo">Evento Corporativo</option>
-                      <option value="otro">Otro</option>
+                      <option value="">Select a type</option>
+                      <option value="birthday">Kids birthday</option>
+                      <option value="school">School event</option>
+                      <option value="wedding">Wedding</option>
+                      <option value="corporate">Corporate event</option>
+                      <option value="other">Other</option>
                     </select>
                   </div>
                 </div>
@@ -227,7 +226,7 @@ const ContactFormSection: React.FC = () => {
                 {/* Message */}
                 <div className="group">
                   <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Mensaje *
+                    Message *
                   </label>
                   <div className="relative">
                     <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
@@ -238,7 +237,7 @@ const ContactFormSection: React.FC = () => {
                       required
                       rows={5}
                       className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-orange-400 focus:ring-4 focus:ring-orange-100 outline-none transition-all duration-300 font-semibold resize-none"
-                      placeholder="Cuéntanos sobre tu evento y qué necesitas..."
+                      placeholder="Tell us about your event and what you need..."
                     />
                   </div>
                 </div>
@@ -251,12 +250,12 @@ const ContactFormSection: React.FC = () => {
                   {submitted ? (
                     <>
                       <CheckCircle className="w-6 h-6" />
-                      ¡Mensaje Enviado!
+                      Message sent!
                     </>
                   ) : (
                     <>
                       <Send className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                      Enviar Mensaje
+                      Send message
                       <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
@@ -265,7 +264,7 @@ const ContactFormSection: React.FC = () => {
                 {submitted && (
                   <div className="p-4 bg-green-50 border-2 border-green-300 rounded-2xl">
                     <p className="text-green-700 font-bold text-center">
-                      ✅ ¡Gracias! Te responderemos en menos de 1 hora.
+                      ✅ Thank you! We&apos;ll get back to you within 1 hour.
                     </p>
                   </div>
                 )}
@@ -276,10 +275,10 @@ const ContactFormSection: React.FC = () => {
           {/* Right - Contact Info */}
           <div className="space-y-6">
             <h2 className="text-4xl lg:text-5xl font-black mb-8">
-              <span className="text-gray-800">Información de</span>
+              <span className="text-gray-800">Contact</span>
               <br />
               <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-                Contacto
+                Information
               </span>
             </h2>
 
@@ -295,9 +294,9 @@ const ContactFormSection: React.FC = () => {
                     <Phone className="w-7 h-7 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-black text-gray-800 mb-1">Teléfono</h3>
+                    <h3 className="text-lg font-black text-gray-800 mb-1">Phone</h3>
                     <p className="text-2xl font-black text-orange-600">(123) 456-7890</p>
-                    <p className="text-sm text-gray-600 mt-1">Disponible 24/7</p>
+                    <p className="text-sm text-gray-600 mt-1">Available 24/7</p>
                   </div>
                 </div>
               </a>
@@ -314,7 +313,7 @@ const ContactFormSection: React.FC = () => {
                   <div className="flex-1">
                     <h3 className="text-lg font-black text-gray-800 mb-1">Email</h3>
                     <p className="text-xl font-black text-orange-600">info@sunnyparty.com</p>
-                    <p className="text-sm text-gray-600 mt-1">Respuesta en 1 hora</p>
+                    <p className="text-sm text-gray-600 mt-1">Response within 1 hour</p>
                   </div>
                 </div>
               </a>
@@ -326,11 +325,11 @@ const ContactFormSection: React.FC = () => {
                     <MapPin className="w-7 h-7 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-black text-gray-800 mb-1">Dirección</h3>
+                    <h3 className="text-lg font-black text-gray-800 mb-1">Address</h3>
                     <p className="text-gray-700 font-semibold">
                       123 Party Street<br />
                       Los Angeles, CA 90001<br />
-                      Estados Unidos
+                      United States
                     </p>
                   </div>
                 </div>
@@ -343,18 +342,18 @@ const ContactFormSection: React.FC = () => {
                     <Clock className="w-7 h-7 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-black text-gray-800 mb-3">Horarios</h3>
+                    <h3 className="text-lg font-black text-gray-800 mb-3">Opening hours</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="font-bold text-gray-700">Lunes - Viernes:</span>
+                        <span className="font-bold text-gray-700">Monday - Friday:</span>
                         <span className="text-orange-600 font-black">8:00 AM - 8:00 PM</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-bold text-gray-700">Sábado:</span>
+                        <span className="font-bold text-gray-700">Saturday:</span>
                         <span className="text-orange-600 font-black">9:00 AM - 6:00 PM</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-bold text-gray-700">Domingo:</span>
+                        <span className="font-bold text-gray-700">Sunday:</span>
                         <span className="text-orange-600 font-black">10:00 AM - 4:00 PM</span>
                       </div>
                     </div>
@@ -365,7 +364,7 @@ const ContactFormSection: React.FC = () => {
 
             {/* Social Media */}
             <div className="bg-white rounded-3xl p-6 shadow-lg border-2 border-orange-200 mt-6">
-              <h3 className="text-xl font-black text-gray-800 mb-4">Síguenos</h3>
+              <h3 className="text-xl font-black text-gray-800 mb-4">Follow us</h3>
               <div className="flex gap-3">
                 <a
                   href="https://facebook.com"
@@ -403,58 +402,66 @@ const ContactFormSection: React.FC = () => {
 // ============================================
 // 🗺️ SECCIÓN 3: MAPA
 // ============================================
+import { fetchSettings, type SiteSettings } from '../../lib/api';
+
 const MapSection: React.FC = () => {
+  const [settings, setSettings] = React.useState<SiteSettings | null>(null);
+
+  React.useEffect(() => {
+    fetchSettings()
+      .then((data) => setSettings(data))
+      .catch(() => setSettings({ googleMapsEmbedUrl: null }));
+  }, []);
+
   return (
     <section className="relative py-20 lg:py-24 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl lg:text-5xl font-black mb-4">
             <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              Encuéntranos
+              Find Us
             </span>
           </h2>
           <p className="text-xl text-gray-600">
-            Visítanos en nuestra oficina o te visitamos nosotros
+            Visit our office or let us come to you.
           </p>
         </div>
 
         <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-          {/* 
-            ============================================
-            🗺️ GOOGLE MAPS AQUÍ
-            ============================================
-            <iframe 
-              src="https://www.google.com/maps/embed?..."
+          {settings?.googleMapsEmbedUrl ? (
+            <iframe
+              src={settings.googleMapsEmbedUrl}
               width="100%"
               height="500"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Business location"
             />
-          */}
-          <div className="aspect-[16/9] bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center relative">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+          ) : (
+            <div className="aspect-[16/9] bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center relative">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
                                radial-gradient(circle at 70% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)`,
-            }}></div>
-            <div className="text-center space-y-4 relative z-10">
-              <MapPin className="w-20 h-20 text-blue-600 mx-auto" />
-              <div className="text-2xl font-bold text-gray-700">Google Maps</div>
-              <div className="text-gray-500">Integra tu Google Maps API aquí</div>
-              <div className="text-sm text-gray-400 max-w-xs mx-auto">
-                <code className="bg-white/80 px-3 py-1 rounded">
-                  &lt;iframe src="..." /&gt;
-                </code>
+                }}
+              ></div>
+              <div className="text-center space-y-4 relative z-10">
+                <MapPin className="w-20 h-20 text-blue-600 mx-auto" />
+                <div className="text-2xl font-bold text-gray-700">Google Maps</div>
+                <div className="text-gray-500">Add your Google Maps embed URL in the admin settings.</div>
               </div>
-            </div>
 
-            {/* Decorative pin */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full">
-              <div className="w-12 h-12 bg-red-500 rounded-full shadow-lg animate-bounce flex items-center justify-center">
-                <MapPin className="w-8 h-8 text-white" fill="white" />
+              {/* Decorative pin */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full">
+                <div className="w-12 h-12 bg-red-500 rounded-full shadow-lg animate-bounce flex items-center justify-center">
+                  <MapPin className="w-8 h-8 text-white" fill="white" />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
@@ -477,14 +484,14 @@ const ContactCTASection: React.FC = () => {
           <div className="text-7xl mb-6">🚀</div>
           
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
-            ¿Listo Para Empezar? <br />
-            ¡Hablemos Hoy!
+            Ready to Get Started? <br />
+            Let&apos;s Talk Today!
           </h2>
 
           <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
-            Nuestro equipo está listo para ayudarte a planear la fiesta perfecta.
+            Our team is ready to help you plan the perfect party.
             <br />
-            <span className="font-black">Respuesta garantizada en menos de 1 hora.</span>
+            <span className="font-black">Response guaranteed within 1 hour.</span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
@@ -493,7 +500,7 @@ const ContactCTASection: React.FC = () => {
               className="group px-10 py-5 bg-white text-orange-600 font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 inline-flex items-center justify-center gap-3"
             >
               <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-              Llamar Ahora
+              Call now
               <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
             </a>
           </div>
@@ -502,15 +509,15 @@ const ContactCTASection: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-8 pt-8 text-white">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-6 h-6" />
-              <span className="font-bold">Respuesta Rápida</span>
+              <span className="font-bold">Fast response</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-6 h-6" />
-              <span className="font-bold">Sin Compromiso</span>
+              <span className="font-bold">No commitment</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-6 h-6" />
-              <span className="font-bold">Presupuesto Gratis</span>
+              <span className="font-bold">Free quote</span>
             </div>
           </div>
         </div>

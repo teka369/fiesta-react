@@ -14,6 +14,13 @@ function authHeaders(): HeadersInit {
   return h;
 }
 
+function authHeadersForForm(): HeadersInit {
+  const token = getStoredToken();
+  const h: HeadersInit = {};
+  if (token) (h as Record<string, string>)['Authorization'] = `Bearer ${token}`;
+  return h;
+}
+
 function buildQuery(params: Record<string, string | number | undefined>): string {
   const search = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
@@ -67,6 +74,49 @@ export async function fetchContactLink(
     `${API_BASE}/products/contact-link/${productId}${params.toString() ? `?${params}` : ''}`
   );
   if (!res.ok) throw new Error('No se pudo obtener el enlace de contacto');
+  return res.json();
+}
+
+export async function uploadProductImage(file: File) {
+  const form = new FormData();
+  form.append('file', file);
+
+  const res = await fetch(`${API_BASE}/products/upload-image`, {
+    method: 'POST',
+    headers: authHeadersForForm(),
+    body: form,
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'Error uploading image');
+  }
+
+  return res.json() as Promise<{ url: string }>;
+}
+
+// ======== SETTINGS (site configuration) ========
+
+export interface SiteSettings {
+  googleMapsEmbedUrl?: string | null;
+}
+
+export async function fetchSettings(): Promise<SiteSettings> {
+  const res = await fetch(`${API_BASE}/settings`);
+  if (!res.ok) throw new Error(`Error ${res.status} loading settings`);
+  return res.json();
+}
+
+export async function updateSettings(body: SiteSettings): Promise<SiteSettings> {
+  const res = await fetch(`${API_BASE}/settings`, {
+    method: 'PUT',
+    headers: authHeaders(),
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Error ${res.status} updating settings`);
+  }
   return res.json();
 }
 

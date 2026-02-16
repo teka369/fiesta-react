@@ -145,17 +145,17 @@ const TiendaIndex: React.FC = () => {
           <div className="text-center max-w-4xl mx-auto space-y-6">
             <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 text-white rounded-full font-black shadow-lg border-4 border-white/50">
               <Gift className="w-6 h-6" />
-              Catálogo de Alquileres
+              Rental catalog
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
               <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-                Nuestra Tienda
+                Our Store
               </span>
               <br />
-              <span className="text-gray-800">Reserva para tu fiesta 🎉</span>
+              <span className="text-gray-800">Book your next party 🎉</span>
             </h1>
             <p className="text-xl text-gray-600">
-              Trampolines, inflables, mesas, decoración y más. Todo para hacer tu evento inolvidable.
+              Bounce houses, inflatables, tables, decor and more. Everything you need for an unforgettable event.
             </p>
           </div>
         </div>
@@ -173,8 +173,8 @@ const TiendaIndex: React.FC = () => {
               <ShoppingBag className="w-8 h-8 text-orange-600" />
             </div>
             <div>
-              <h2 className="text-3xl font-black text-gray-800">Productos y servicios</h2>
-              <p className="text-gray-600">Todos los artículos disponibles para alquilar</p>
+              <h2 className="text-3xl font-black text-gray-800">Products & services</h2>
+              <p className="text-gray-600">All items available for rent</p>
             </div>
           </div>
 
@@ -187,7 +187,7 @@ const TiendaIndex: React.FC = () => {
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Buscar por nombre o descripción..."
+                  placeholder="Search by name or description..."
                   className="w-full pl-12 pr-4 py-3 rounded-2xl border-2 border-orange-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 outline-none transition-all font-semibold"
                 />
               </div>
@@ -212,7 +212,7 @@ const TiendaIndex: React.FC = () => {
                 }}
                 className="px-4 py-3 rounded-2xl border-2 border-orange-200 font-bold text-gray-700 focus:border-orange-400 outline-none"
               >
-                <option value="">Todas las categorías</option>
+                <option value="">All categories</option>
                 {activeCategories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
@@ -255,23 +255,25 @@ const TiendaIndex: React.FC = () => {
           {error && (
             <div className="mb-8 p-6 bg-red-50 border-2 border-red-200 rounded-3xl text-center">
               <p className="text-red-700 font-bold">{error}</p>
-              <p className="text-sm text-red-600 mt-2">¿Está el backend en marcha en el puerto 3000?</p>
+              <p className="text-sm text-red-600 mt-2">
+                Is the backend running and reachable?
+              </p>
             </div>
           )}
 
           {loading ? (
             <div className="flex flex-col items-center justify-center py-24">
               <Loader2 className="w-16 h-16 text-orange-500 animate-spin mb-4" />
-              <p className="text-xl font-bold text-gray-600">Cargando productos...</p>
+              <p className="text-xl font-bold text-gray-600">Loading products...</p>
             </div>
           ) : products.length === 0 ? (
             <div className="text-center py-24 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl border-2 border-orange-200">
               <div className="text-7xl mb-4">🎪</div>
-              <h2 className="text-2xl font-black text-gray-800 mb-2">No hay productos</h2>
+              <h2 className="text-2xl font-black text-gray-800 mb-2">No products found</h2>
               <p className="text-gray-600">
                 {search || status || categoryId
-                  ? 'Prueba otros filtros, categoría o búsqueda.'
-                  : 'Aún no hay productos en la tienda.'}
+                  ? 'Try different filters, category or search.'
+                  : 'There are no products in the store yet.'}
               </p>
             </div>
           ) : (
@@ -292,10 +294,10 @@ const TiendaIndex: React.FC = () => {
                     className="p-3 rounded-2xl bg-gradient-to-r from-orange-100 to-yellow-100 border-2 border-orange-200 font-black text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all inline-flex items-center gap-2"
                   >
                     <ChevronLeft className="w-5 h-5" />
-                    Anterior
+                    Previous
                   </button>
                   <span className="px-4 py-2 font-bold text-gray-700">
-                    Página {meta.page} de {meta.totalPages} ({meta.total} productos)
+                    Page {meta.page} of {meta.totalPages} ({meta.total} products)
                   </span>
                   <button
                     type="button"
@@ -303,7 +305,7 @@ const TiendaIndex: React.FC = () => {
                     disabled={page >= meta.totalPages}
                     className="p-3 rounded-2xl bg-gradient-to-r from-orange-100 to-yellow-100 border-2 border-orange-200 font-black text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all inline-flex items-center gap-2"
                   >
-                    Siguiente
+                    Next
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
@@ -322,8 +324,8 @@ const TiendaIndex: React.FC = () => {
                 <FolderOpen className="w-8 h-8 text-orange-600" />
               </div>
               <div>
-                <h2 className="text-3xl font-black text-gray-800">Explora por categoría</h2>
-                <p className="text-gray-600">Elige una categoría para ver sus productos</p>
+                <h2 className="text-3xl font-black text-gray-800">Browse by category</h2>
+                <p className="text-gray-600">Choose a category to see its products</p>
               </div>
             </div>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -348,7 +350,7 @@ const TiendaIndex: React.FC = () => {
                     <p className="text-sm text-gray-500 mt-1 line-clamp-2">{cat.description}</p>
                   ) : null}
                   <span className="inline-block mt-3 text-orange-600 font-bold text-sm">
-                    Ver productos →
+                    View products →
                   </span>
                 </button>
               ))}
@@ -366,8 +368,8 @@ const TiendaIndex: React.FC = () => {
                 <Package className="w-8 h-8 text-amber-600" />
               </div>
               <div>
-                <h2 className="text-3xl font-black text-gray-800">Paquetes</h2>
-                <p className="text-gray-600">Combos con precio especial para tu evento</p>
+                <h2 className="text-3xl font-black text-gray-800">Bundles</h2>
+                <p className="text-gray-600">Special-price combos for your event</p>
               </div>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

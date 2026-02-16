@@ -29,9 +29,9 @@ export default function PaqueteNuevo() {
       <div className="container mx-auto px-4">
         <Link to="/admin" className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 font-semibold mb-8">
           <ArrowLeft className="w-5 h-5" />
-          Volver al panel
+          Back to dashboard
         </Link>
-        <h1 className="text-2xl font-black text-gray-800 mb-8">Nuevo paquete</h1>
+        <h1 className="text-2xl font-black text-gray-800 mb-8">New bundle</h1>
         <PaqueteForm onSubmit={handleSubmit} onCancel={() => navigate('/admin')} isSubmitting={isSubmitting} />
       </div>
     </main>

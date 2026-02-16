@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, User, Loader2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
-// ============================================
-// 🔐 Página de acceso (discreta para el administrador)
-// ============================================
+// Admin access page
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { login, register, token, isReady } = useAuth();
@@ -32,7 +30,7 @@ const Login: React.FC = () => {
       }
       navigate('/admin', { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
+      setError(err instanceof Error ? err.message : 'Error while signing in');
     } finally {
       setLoading(false);
     }
@@ -47,10 +45,10 @@ const Login: React.FC = () => {
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 rounded-full border border-orange-200 mb-4">
               <Lock className="w-5 h-5 text-orange-600" />
-              <span className="font-bold text-orange-700">Acceso administrador</span>
+              <span className="font-bold text-orange-700">Admin access</span>
             </div>
             <h1 className="text-2xl font-black text-gray-800">
-              {isRegister ? 'Crear cuenta' : 'Iniciar sesión'}
+              {isRegister ? 'Create account' : 'Sign in'}
             </h1>
           </div>
 
@@ -63,7 +61,9 @@ const Login: React.FC = () => {
 
             {isRegister && (
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Nombre (opcional)</label>
+                <label className="block text-sm font-bold text-gray-700 mb-1">
+                  Name (optional)
+                </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -71,14 +71,14 @@ const Login: React.FC = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none"
-                    placeholder="Tu nombre"
+                    placeholder="Your name"
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">Correo electrónico</label>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
@@ -87,13 +87,13 @@ const Login: React.FC = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none"
-                  placeholder="correo@ejemplo.com"
+                  placeholder="you@example.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1">Contraseña</label>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Password</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
@@ -103,7 +103,7 @@ const Login: React.FC = () => {
                   required
                   minLength={6}
                   className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="At least 6 characters"
                 />
               </div>
             </div>
@@ -116,15 +116,15 @@ const Login: React.FC = () => {
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : isRegister ? (
-                'Crear cuenta'
+                'Create account'
               ) : (
-                'Entrar'
+                'Sign in'
               )}
             </button>
           </form>
 
           <p className="mt-6 text-center text-sm text-gray-600">
-            {isRegister ? '¿Ya tienes cuenta?' : '¿Primera vez?'}{' '}
+            {isRegister ? 'Already have an account?' : 'First time here?'}{' '}
             <button
               type="button"
               onClick={() => {
@@ -133,7 +133,7 @@ const Login: React.FC = () => {
               }}
               className="font-bold text-orange-600 hover:underline"
             >
-              {isRegister ? 'Iniciar sesión' : 'Crear cuenta'}
+              {isRegister ? 'Sign in' : 'Create account'}
             </button>
           </p>
         </div>

@@ -34,9 +34,9 @@ export default function ProductoNuevo() {
           className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 font-semibold mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
-          Volver al listado
+          Back to list
         </Link>
-        <h1 className="text-2xl font-black text-gray-800 mb-8">Nuevo producto</h1>
+        <h1 className="text-2xl font-black text-gray-800 mb-8">New product</h1>
         <ProductoForm
           onSubmit={handleSubmit}
           onCancel={() => navigate('/admin')}

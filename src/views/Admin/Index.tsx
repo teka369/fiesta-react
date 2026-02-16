@@ -108,7 +108,7 @@ export default function AdminIndex() {
   }, [tab]);
 
   const handleDeleteProduct = async (id: string, title: string) => {
-    if (!window.confirm(`¿Eliminar producto "${title}"?`)) return;
+    if (!window.confirm(`Delete product "${title}"?`)) return;
     setDeletingId(id);
     try {
       await deleteProduct(id);
@@ -119,7 +119,7 @@ export default function AdminIndex() {
   };
 
   const handleDeleteCategory = async (id: string, name: string) => {
-    if (!window.confirm(`¿Eliminar categoría "${name}"?`)) return;
+    if (!window.confirm(`Delete category "${name}"?`)) return;
     setDeletingId(id);
     try {
       await deleteCategory(id);
@@ -130,7 +130,7 @@ export default function AdminIndex() {
   };
 
   const handleDeletePackage = async (id: string, title: string) => {
-    if (!window.confirm(`¿Eliminar paquete "${title}"?`)) return;
+    if (!window.confirm(`Delete bundle "${title}"?`)) return;
     setDeletingId(id);
     try {
       await deletePackage(id);
@@ -178,7 +178,7 @@ export default function AdminIndex() {
                 className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-xl shadow-lg hover:shadow-xl"
               >
                 <Plus className="w-5 h-5" />
-                Nueva categoría
+                New category
               </Link>
             )}
             {tab === 'paquetes' && (
@@ -187,16 +187,26 @@ export default function AdminIndex() {
                 className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-xl shadow-lg hover:shadow-xl"
               >
                 <Plus className="w-5 h-5" />
-                Nuevo paquete
+                New bundle
               </Link>
             )}
             <button
               type="button"
-              onClick={() => { logout(); navigate('/'); }}
+              onClick={() => navigate('/admin/settings')}
+              className="inline-flex items-center gap-2 px-4 py-3 border-2 border-orange-300 rounded-xl font-bold text-orange-600 hover:bg-orange-50"
+            >
+              Site settings
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+                navigate('/');
+              }}
               className="inline-flex items-center gap-2 px-4 py-3 border-2 border-gray-300 rounded-xl font-bold text-gray-600 hover:border-orange-400 hover:text-orange-600"
             >
               <LogOut className="w-5 h-5" />
-              Salir
+              Log out
             </button>
           </div>
         </div>
@@ -204,9 +214,9 @@ export default function AdminIndex() {
         {/* Tabs */}
         <div className="flex gap-2 mb-6">
           {[
-            { id: 'productos' as Tab, label: 'Productos / Servicios', icon: Package },
-            { id: 'categorias' as Tab, label: 'Categorías', icon: FolderTree },
-            { id: 'paquetes' as Tab, label: 'Paquetes', icon: Layers },
+            { id: 'productos' as Tab, label: 'Products / Services', icon: Package },
+            { id: 'categorias' as Tab, label: 'Categories', icon: FolderTree },
+            { id: 'paquetes' as Tab, label: 'Bundles', icon: Layers },
           ].map((t) => (
             <button
               key={t.id}
@@ -229,14 +239,14 @@ export default function AdminIndex() {
             <div className="p-6 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <Package className="w-6 h-6 text-orange-500" />
-                <h1 className="text-xl font-black text-gray-800">Productos y servicios</h1>
+                <h1 className="text-xl font-black text-gray-800">Products & services</h1>
               </div>
               <Link
                 to="/admin/productos/nuevo"
                 className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-xl shadow hover:shadow-lg"
               >
                 <Plus className="w-4 h-4" />
-                Crear producto
+                Create product
               </Link>
             </div>
           )}
@@ -244,14 +254,14 @@ export default function AdminIndex() {
             <div className="p-6 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <FolderTree className="w-6 h-6 text-orange-500" />
-                <h1 className="text-xl font-black text-gray-800">Categorías</h1>
+                <h1 className="text-xl font-black text-gray-800">Categories</h1>
               </div>
               <Link
                 to="/admin/categorias/nueva"
                 className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-xl shadow hover:shadow-lg"
               >
                 <Plus className="w-4 h-4" />
-                Crear categoría
+                Create category
               </Link>
             </div>
           )}
@@ -259,14 +269,14 @@ export default function AdminIndex() {
             <div className="p-6 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <Layers className="w-6 h-6 text-orange-500" />
-                <h1 className="text-xl font-black text-gray-800">Paquetes</h1>
+                <h1 className="text-xl font-black text-gray-800">Bundles</h1>
               </div>
               <Link
                 to="/admin/paquetes/nuevo"
                 className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-xl shadow hover:shadow-lg"
               >
                 <Plus className="w-4 h-4" />
-                Crear paquete
+                Create bundle
               </Link>
             </div>
           )}
@@ -274,28 +284,28 @@ export default function AdminIndex() {
           {tab === 'productos' && (loading ? (
             <div className="p-16 flex flex-col items-center justify-center text-gray-500">
               <Loader2 className="w-12 h-12 animate-spin mb-4" />
-              Cargando...
+              Loading...
             </div>
           ) : products.length === 0 ? (
             <div className="p-16 text-center">
-              <p className="text-gray-600 mb-6">Aún no hay productos.</p>
-              <Link
-                to="/admin/productos/nuevo"
-                className="inline-flex items-center gap-2 px-5 py-3 bg-orange-500 text-white font-bold rounded-xl"
-              >
-                <Plus className="w-5 h-5" />
-                Crear el primero
-              </Link>
-            </div>
+            <p className="text-gray-600 mb-6">There are no products yet.</p>
+            <Link
+              to="/admin/productos/nuevo"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-orange-500 text-white font-bold rounded-xl"
+            >
+              <Plus className="w-5 h-5" />
+              Create the first one
+            </Link>
+          </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Producto</th>
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Precio</th>
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Estado</th>
-                    <th className="text-right py-4 px-4 font-black text-gray-700">Acciones</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Product</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Price</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Status</th>
+                    <th className="text-right py-4 px-4 font-black text-gray-700">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -347,27 +357,27 @@ export default function AdminIndex() {
           ))}
 
           {tab === 'categorias' && (loading ? (
-            <div className="p-16 flex flex-col items-center justify-center text-gray-500">
-              <Loader2 className="w-12 h-12 animate-spin mb-4" />
-              Cargando...
-            </div>
-          ) : categories.length === 0 ? (
-            <div className="p-16 text-center">
-              <p className="text-gray-600 mb-6">Aún no hay categorías.</p>
-              <Link to="/admin/categorias/nueva" className="inline-block px-5 py-3 bg-orange-500 text-white font-bold rounded-xl">
-                <Plus className="w-5 h-5" />
-                Crear la primera
-              </Link>
-            </div>
-          ) : (
+          <div className="p-16 flex flex-col items-center justify-center text-gray-500">
+            <Loader2 className="w-12 h-12 animate-spin mb-4" />
+            Loading...
+          </div>
+        ) : categories.length === 0 ? (
+          <div className="p-16 text-center">
+            <p className="text-gray-600 mb-6">There are no categories yet.</p>
+            <Link to="/admin/categorias/nueva" className="inline-block px-5 py-3 bg-orange-500 text-white font-bold rounded-xl">
+              <Plus className="w-5 h-5" />
+              Create the first one
+            </Link>
+          </div>
+        ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Nombre</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Name</th>
                     <th className="text-left py-4 px-4 font-black text-gray-700">Slug</th>
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Activa</th>
-                    <th className="text-right py-4 px-4 font-black text-gray-700">Acciones</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Active</th>
+                    <th className="text-right py-4 px-4 font-black text-gray-700">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -377,15 +387,15 @@ export default function AdminIndex() {
                       <td className="py-4 px-4 text-gray-600 text-sm">{c.slug}</td>
                       <td className="py-4 px-4">
                         <span className={`px-3 py-1 rounded-full text-sm font-bold ${c.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
-                          {c.isActive ? 'Sí' : 'No'}
+                          {c.isActive ? 'Yes' : 'No'}
                         </span>
                       </td>
                       <td className="py-4 px-4 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <Link to={`/admin/categorias/${c.id}/editar`} className="p-2 rounded-lg bg-orange-100 text-orange-600 hover:bg-orange-200" title="Editar">
+                          <Link to={`/admin/categorias/${c.id}/editar`} className="p-2 rounded-lg bg-orange-100 text-orange-600 hover:bg-orange-200" title="Edit">
                             <Pencil className="w-4 h-4" />
                           </Link>
-                          <button type="button" onClick={() => handleDeleteCategory(c.id, c.name)} disabled={deletingId === c.id} className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 disabled:opacity-50" title="Eliminar">
+                          <button type="button" onClick={() => handleDeleteCategory(c.id, c.name)} disabled={deletingId === c.id} className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 disabled:opacity-50" title="Delete">
                             {deletingId === c.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                           </button>
                         </div>
@@ -400,14 +410,14 @@ export default function AdminIndex() {
           {tab === 'paquetes' && (loading ? (
             <div className="p-16 flex flex-col items-center justify-center text-gray-500">
               <Loader2 className="w-12 h-12 animate-spin mb-4" />
-              Cargando...
+              Loading...
             </div>
           ) : packages.length === 0 ? (
             <div className="p-16 text-center">
-              <p className="text-gray-600 mb-6">Aún no hay paquetes.</p>
+              <p className="text-gray-600 mb-6">There are no bundles yet.</p>
               <Link to="/admin/paquetes/nuevo" className="inline-block px-5 py-3 bg-orange-500 text-white font-bold rounded-xl">
                 <Plus className="w-5 h-5" />
-                Crear el primero
+                Create the first one
               </Link>
             </div>
           ) : (
@@ -415,10 +425,10 @@ export default function AdminIndex() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Paquete</th>
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Precio especial</th>
-                    <th className="text-left py-4 px-4 font-black text-gray-700">Productos</th>
-                    <th className="text-right py-4 px-4 font-black text-gray-700">Acciones</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Bundle</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Special price</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-700">Products</th>
+                    <th className="text-right py-4 px-4 font-black text-gray-700">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -429,14 +439,14 @@ export default function AdminIndex() {
                         ${typeof p.specialPrice === 'string' ? p.specialPrice : Number(p.specialPrice)}
                       </td>
                       <td className="py-4 px-4 text-sm text-gray-600">
-                        {p.items?.length ? `${p.items.length} producto(s)` : '—'}
+                        {p.items?.length ? `${p.items.length} item(s)` : '—'}
                       </td>
                       <td className="py-4 px-4 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <Link to={`/admin/paquetes/${p.id}/editar`} className="p-2 rounded-lg bg-orange-100 text-orange-600 hover:bg-orange-200" title="Editar">
+                          <Link to={`/admin/paquetes/${p.id}/editar`} className="p-2 rounded-lg bg-orange-100 text-orange-600 hover:bg-orange-200" title="Edit">
                             <Pencil className="w-4 h-4" />
                           </Link>
-                          <button type="button" onClick={() => handleDeletePackage(p.id, p.title)} disabled={deletingId === p.id} className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 disabled:opacity-50" title="Eliminar">
+                          <button type="button" onClick={() => handleDeletePackage(p.id, p.title)} disabled={deletingId === p.id} className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 disabled:opacity-50" title="Delete">
                             {deletingId === p.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                           </button>
                         </div>
