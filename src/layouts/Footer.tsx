@@ -27,17 +27,17 @@ const Footer: React.FC = () => {
               <span className="text-orange-600 font-bold">Rentals</span>
             </Link>
             <p className="text-sm leading-relaxed text-gray-600 mb-6 max-w-xs">
-              Hacemos que cada celebración sea inolvidable. Trampolines, inflables, mobiliario y decoración para tu fiesta.
+              We make every celebration unforgettable. Bounce houses, inflatables, furniture and decor for your party.
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-orange-200 shadow-md">
               <Gift className="w-4 h-4 text-orange-500" />
-              <span className="text-sm font-bold text-orange-700">Alquileres y venta</span>
+              <span className="text-sm font-bold text-orange-700">Rentals & sales</span>
             </div>
           </div>
 
-          {/* Enlaces rápidos */}
+          {/* Quick links */}
           <div>
-            <h3 className="text-orange-700 font-black text-sm uppercase tracking-wider mb-4">Enlaces</h3>
+            <h3 className="text-orange-700 font-black text-sm uppercase tracking-wider mb-4">Links</h3>
             <ul className="space-y-3">
               {navLinks.map((link) => (
                 <li key={link.to}>
@@ -53,9 +53,9 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contacto */}
+          {/* Contact */}
           <div>
-            <h3 className="text-orange-700 font-black text-sm uppercase tracking-wider mb-4">Contacto</h3>
+            <h3 className="text-orange-700 font-black text-sm uppercase tracking-wider mb-4">Contact</h3>
             <ul className="space-y-4">
               <li>
                 <a
@@ -81,14 +81,14 @@ const Footer: React.FC = () => {
               </li>
               <li className="inline-flex items-start gap-3 text-gray-600 text-sm">
                 <MapPin className="w-4 h-4 text-orange-500 mt-0.5 shrink-0" />
-                <span>Consulta cobertura y zonas de entrega</span>
+                <span>Check coverage and delivery areas</span>
               </li>
             </ul>
           </div>
 
-          {/* Redes y legal */}
+          {/* Social & legal */}
           <div>
-            <h3 className="text-orange-700 font-black text-sm uppercase tracking-wider mb-4">Síguenos</h3>
+            <h3 className="text-orange-700 font-black text-sm uppercase tracking-wider mb-4">Follow us</h3>
             <div className="flex gap-3 mb-6">
               <a
                 href="#"

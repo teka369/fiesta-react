@@ -635,39 +635,39 @@ const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'María González',
-      role: 'Madre de 2',
+      name: 'Maria Gonzalez',
+      role: 'Mom of 2',
       image: '👩',
       rating: 5,
-      text: '¡Increíble servicio! El trampolín fue el centro de atención en la fiesta de cumpleaños de mi hijo. Los niños no pararon de saltar en todo el día. Súper recomendado.',
-      date: 'Hace 2 semanas'
+      text: 'Incredible service! The bounce house was the center of attention at my son’s birthday party. The kids jumped all day long. Highly recommended.',
+      date: '2 weeks ago'
     },
     {
       id: 2,
-      name: 'Carlos Rodríguez',
-      role: 'Organizador de Eventos',
+      name: 'Carlos Rodriguez',
+      role: 'Event planner',
       image: '👨',
       rating: 5,
-      text: 'Trabajamos con Sunny Party para eventos corporativos y siempre superan nuestras expectativas. Profesionales, puntuales y con productos de primera calidad.',
-      date: 'Hace 1 mes'
+      text: 'We work with Sunny Party for corporate events and they always exceed our expectations. Professional, on time and with top‑quality products.',
+      date: '1 month ago'
     },
     {
       id: 3,
-      name: 'Ana Martínez',
-      role: 'Maestra de Preescolar',
+      name: 'Ana Martinez',
+      role: 'Preschool teacher',
       image: '👩‍🏫',
       rating: 5,
-      text: 'Rentamos varios inflables para el festival de la escuela y fue todo un éxito. La instalación fue rápida y el personal muy amable. ¡Los niños estaban felices!',
-      date: 'Hace 3 semanas'
+      text: 'We rented several inflatables for the school festival and it was a total success. Setup was fast and the staff was very friendly. The kids were thrilled!',
+      date: '3 weeks ago'
     },
     {
       id: 4,
-      name: 'Roberto López',
-      role: 'Padre de 3',
+      name: 'Roberto Lopez',
+      role: 'Dad of 3',
       image: '👨‍👧‍👦',
       rating: 5,
-      text: 'La mejor decisión que tomamos para la fiesta. El castillo inflable mantuvo entretenidos a 30 niños sin problema. Excelente relación calidad-precio.',
-      date: 'Hace 1 semana'
+      text: 'The best decision we made for the party. The inflatable castle kept 30 kids entertained with no problem. Excellent value for money.',
+      date: '1 week ago'
     },
   ];
 

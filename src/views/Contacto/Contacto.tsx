@@ -94,7 +94,7 @@ const ContactFormSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar el formulario
+    // Here you would add the logic to send the form
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);
   };

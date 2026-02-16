@@ -49,21 +49,21 @@ const AboutHeroSection: React.FC = () => {
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
               <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-                Creando Sonrisas
+                Creating Smiles
               </span>
               <br />
-              <span className="text-gray-800">Desde 2012 🎊</span>
+              <span className="text-gray-800">Since 2012 🎊</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-600 leading-relaxed">
-              Somos más que un servicio de alquiler. Somos <span className="font-bold text-orange-600">creadores de momentos mágicos</span> que transforman celebraciones ordinarias en experiencias inolvidables para toda la familia.
+              We are more than a rental service. We are <span className="font-bold text-orange-600">creators of magical moments</span> that turn ordinary celebrations into unforgettable experiences for the whole family.
             </p>
 
             {/* Quick stats */}
             <div className="grid grid-cols-3 gap-4 pt-4">
               {[
-                { number: '12+', label: 'Años' },
-                { number: '5K+', label: 'Fiestas' },
+                { number: '12+', label: 'Years' },
+                { number: '5K+', label: 'Parties' },
                 { number: '4.9', label: 'Rating' },
               ].map((stat, index) => (
                 <div
@@ -93,8 +93,8 @@ const AboutHeroSection: React.FC = () => {
                   <div className="aspect-[4/3] bg-gradient-to-br from-orange-200 to-yellow-200 flex items-center justify-center">
                     <div className="text-center space-y-4">
                       <div className="text-9xl">👨‍👩‍👧‍👦</div>
-                      <div className="text-2xl font-bold text-gray-700">Imagen del Equipo</div>
-                      <div className="text-gray-500">Foto grupal del equipo Sunny Party</div>
+                      <div className="text-2xl font-bold text-gray-700">Team Photo</div>
+                      <div className="text-gray-500">Group photo of the Sunny Party team</div>
                     </div>
                   </div>
                 </div>
@@ -102,7 +102,7 @@ const AboutHeroSection: React.FC = () => {
 
               {/* Badge */}
               <div className="absolute top-6 right-6 bg-green-500 text-white font-black px-6 py-3 rounded-full shadow-2xl animate-bounce border-4 border-white">
-                ¡Familia! 💚
+                Family! 💚
               </div>
             </div>
           </div>
@@ -124,14 +124,14 @@ const OurStorySection: React.FC = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full border-2 border-orange-200 mb-6">
               <Sparkles className="w-5 h-5 text-orange-500" />
-              <span className="font-bold text-orange-700">Nuestra Historia</span>
+              <span className="font-bold text-orange-700">Our Story</span>
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-              <span className="text-gray-800">Cómo Empezó</span>
+              <span className="text-gray-800">How It Started</span>
               <br />
               <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-                Nuestro Sueño
+                Our Dream
               </span>
             </h2>
           </div>
@@ -141,26 +141,26 @@ const OurStorySection: React.FC = () => {
             {[
               {
                 year: '2012',
-                title: 'Los Inicios 🌱',
-                description: 'Todo comenzó con un sueño: hacer que cada fiesta infantil fuera especial. Con solo 3 trampolines y mucha pasión, iniciamos Sunny Party Rentals en un pequeño garaje.',
+                title: 'The Beginning 🌱',
+                description: 'It all started with a dream: to make every kids’ party special. With just 3 bounce houses and a lot of passion, we launched Sunny Party Rentals from a small garage.',
                 color: 'from-green-400 to-emerald-500'
               },
               {
                 year: '2015',
-                title: 'Crecimiento 📈',
-                description: 'Nuestra dedicación dio frutos. Expandimos nuestro inventario a más de 20 productos diferentes y abrimos nuestra primera bodega oficial. ¡Las familias confiaban en nosotros!',
+                title: 'Growth 📈',
+                description: 'Our dedication paid off. We expanded our inventory to more than 20 different products and opened our first official warehouse. Families trusted us!',
                 color: 'from-blue-400 to-cyan-500'
               },
               {
                 year: '2018',
-                title: 'Reconocimiento ⭐',
-                description: 'Ganamos el premio "Mejor Servicio de Fiestas Infantiles" de nuestra ciudad. Alcanzamos las 2,000 fiestas realizadas con un rating de 4.8/5.',
+                title: 'Recognition ⭐',
+                description: 'We won our city’s “Best Kids Party Service” award. We reached 2,000 parties with a 4.8/5 rating.',
                 color: 'from-purple-400 to-pink-500'
               },
               {
                 year: '2024',
-                title: 'Líder del Mercado 🏆',
-                description: 'Hoy somos la empresa #1 en alquiler de artículos para fiestas. Con más de 50 productos, un equipo de 15 personas, y más de 5,000 familias felices.',
+                title: 'Market Leader 🏆',
+                description: 'Today we are the #1 party rentals company in our area. With more than 50 products, a team of 15 people, and over 5,000 happy families.',
                 color: 'from-orange-400 to-amber-500'
               },
             ].map((milestone, index) => (
@@ -204,7 +204,7 @@ const MissionVisionSection: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           
-          {/* Misión */}
+          {/* Mission */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-amber-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
             <div className="relative bg-white rounded-3xl p-8 lg:p-12 shadow-2xl border-4 border-orange-200 hover:border-orange-400 transition-all duration-300 hover:-translate-y-2">
@@ -213,15 +213,15 @@ const MissionVisionSection: React.FC = () => {
               </div>
               
               <h3 className="text-3xl lg:text-4xl font-black text-gray-800 mb-6">
-                Nuestra <span className="text-orange-600">Misión</span>
+                Our <span className="text-orange-600">Mission</span>
               </h3>
               
               <p className="text-lg text-gray-600 leading-relaxed">
-                Transformar cada celebración en una experiencia mágica e inolvidable, proporcionando productos de la más alta calidad con un servicio excepcional que supere las expectativas de nuestras familias.
+                To turn every celebration into a magical and unforgettable experience by providing the highest‑quality products with exceptional service that exceeds our families’ expectations.
               </p>
 
               <div className="mt-8 space-y-3">
-                {['Calidad Premium', 'Servicio Excepcional', 'Precios Justos'].map((item, i) => (
+                {['Premium quality', 'Exceptional service', 'Fair prices'].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
                     <span className="font-bold text-gray-700">{item}</span>
@@ -231,7 +231,7 @@ const MissionVisionSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Visión */}
+          {/* Vision */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
             <div className="relative bg-white rounded-3xl p-8 lg:p-12 shadow-2xl border-4 border-blue-200 hover:border-blue-400 transition-all duration-300 hover:-translate-y-2">
@@ -240,15 +240,15 @@ const MissionVisionSection: React.FC = () => {
               </div>
               
               <h3 className="text-3xl lg:text-4xl font-black text-gray-800 mb-6">
-                Nuestra <span className="text-blue-600">Visión</span>
+                Our <span className="text-blue-600">Vision</span>
               </h3>
               
               <p className="text-lg text-gray-600 leading-relaxed">
-                Ser la empresa líder y más confiable en alquiler de artículos para fiestas en todo Estados Unidos, reconocida por crear momentos de alegría que las familias atesoren por siempre.
+                To be the leading and most trusted party rentals company across the United States, recognized for creating joyful moments that families treasure forever.
               </p>
 
               <div className="mt-8 space-y-3">
-                {['Expansión Nacional', 'Innovación Constante', 'Liderazgo del Mercado'].map((item, i) => (
+                {['Nationwide expansion', 'Constant innovation', 'Market leadership'].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <Star className="w-6 h-6 text-yellow-500 fill-yellow-500 flex-shrink-0" />
                     <span className="font-bold text-gray-700">{item}</span>
@@ -269,31 +269,31 @@ const MissionVisionSection: React.FC = () => {
 const TeamSection: React.FC = () => {
   const team = [
     {
-      name: 'Carlos Rodríguez',
-      role: 'Fundador & CEO',
+      name: 'Carlos Rodriguez',
+      role: 'Founder & CEO',
       image: '👨‍💼',
-      description: 'Visionario detrás de Sunny Party con 12+ años de experiencia',
+      description: 'Visionary behind Sunny Party with 12+ years of experience',
       color: 'from-orange-400 to-amber-500'
     },
     {
-      name: 'María González',
-      role: 'Directora de Operaciones',
+      name: 'Maria Gonzalez',
+      role: 'Operations Director',
       image: '👩‍💼',
-      description: 'Experta en logística y satisfacción del cliente',
+      description: 'Expert in logistics and customer satisfaction',
       color: 'from-pink-400 to-rose-500'
     },
     {
-      name: 'Luis Martínez',
-      role: 'Jefe de Instalaciones',
+      name: 'Luis Martinez',
+      role: 'Head of Installations',
       image: '👨‍🔧',
-      description: 'Garantiza que cada evento sea perfecto y seguro',
+      description: 'Ensures every event is perfect and safe',
       color: 'from-blue-400 to-cyan-500'
     },
     {
-      name: 'Ana Sánchez',
-      role: 'Gerente de Atención al Cliente',
+      name: 'Ana Sanchez',
+      role: 'Customer Service Manager',
       image: '👩',
-      description: 'Siempre lista para hacer tu fiesta inolvidable',
+      description: 'Always ready to make your party unforgettable',
       color: 'from-purple-400 to-pink-500'
     },
   ];
@@ -305,19 +305,19 @@ const TeamSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full border-2 border-orange-200 mb-6">
             <Users className="w-5 h-5 text-orange-500" />
-            <span className="font-bold text-orange-700">Nuestro Equipo</span>
+            <span className="font-bold text-orange-700">Our Team</span>
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="text-gray-800">Conoce a Las Personas</span>
+            <span className="text-gray-800">Meet the People</span>
             <br />
             <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              Que Hacen La Magia
+              Who Make the Magic
             </span>
           </h2>
 
           <p className="text-xl text-gray-600">
-            Un equipo apasionado dedicado a crear momentos inolvidables
+            A passionate team dedicated to creating unforgettable moments.
           </p>
         </div>
 
@@ -361,38 +361,38 @@ const ValuesSection: React.FC = () => {
   const values = [
     {
       icon: Shield,
-      title: 'Seguridad Primero',
-      description: 'Todos nuestros productos están certificados y pasan rigurosas inspecciones de seguridad',
+      title: 'Safety First',
+      description: 'All of our products are certified and go through rigorous safety inspections.',
       color: 'from-blue-400 to-cyan-500'
     },
     {
       icon: Award,
-      title: 'Calidad Premium',
-      description: 'Invertimos en los mejores productos del mercado para garantizar experiencias excepcionales',
+      title: 'Premium Quality',
+      description: 'We invest in the best products on the market to guarantee exceptional experiences.',
       color: 'from-purple-400 to-pink-500'
     },
     {
       icon: Smile,
-      title: 'Diversión Garantizada',
-      description: 'Nuestra pasión es ver sonrisas. Cada detalle está pensado para crear momentos de alegría',
+      title: 'Fun Guaranteed',
+      description: 'Our passion is seeing smiles. Every detail is designed to create moments of joy.',
       color: 'from-yellow-400 to-orange-500'
     },
     {
       icon: Heart,
-      title: 'Compromiso Total',
-      description: 'Tratamos cada evento como si fuera nuestra propia celebración familiar',
+      title: 'Total Commitment',
+      description: 'We treat every event as if it were our own family celebration.',
       color: 'from-red-400 to-pink-500'
     },
     {
       icon: ThumbsUp,
-      title: 'Transparencia',
-      description: 'Precios claros, sin sorpresas. Lo que ves es lo que pagas',
+      title: 'Transparency',
+      description: 'Clear pricing, no surprises. What you see is what you pay.',
       color: 'from-green-400 to-emerald-500'
     },
     {
       icon: TrendingUp,
-      title: 'Mejora Continua',
-      description: 'Siempre buscamos innovar y mejorar nuestros servicios para ti',
+      title: 'Continuous Improvement',
+      description: 'We are always looking to innovate and improve our services for you.',
       color: 'from-indigo-400 to-purple-500'
     },
   ];
@@ -412,10 +412,10 @@ const ValuesSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
             <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              Nuestros Valores
+              Our Values
             </span>
             <br />
-            <span className="text-gray-800">Que Nos Definen</span>
+            <span className="text-gray-800">That Define Us</span>
           </h2>
         </div>
 
@@ -446,12 +446,12 @@ const ValuesSection: React.FC = () => {
 // ============================================
 const AchievementsSection: React.FC = () => {
   const achievements = [
-    { icon: '🎉', number: '5,000+', label: 'Fiestas Realizadas', color: 'from-orange-500 to-amber-600' },
-    { icon: '⭐', number: '4.9/5', label: 'Calificación Promedio', color: 'from-yellow-500 to-orange-500' },
-    { icon: '👨‍👩‍👧‍👦', number: '15+', label: 'Miembros del Equipo', color: 'from-blue-500 to-cyan-600' },
-    { icon: '🏆', number: '8', label: 'Premios Ganados', color: 'from-purple-500 to-pink-600' },
-    { icon: '🎪', number: '50+', label: 'Productos Disponibles', color: 'from-green-500 to-emerald-600' },
-    { icon: '🚚', number: '100%', label: 'Entregas a Tiempo', color: 'from-red-500 to-orange-600' },
+    { icon: '🎉', number: '5,000+', label: 'Parties Hosted', color: 'from-orange-500 to-amber-600' },
+    { icon: '⭐', number: '4.9/5', label: 'Average Rating', color: 'from-yellow-500 to-orange-500' },
+    { icon: '👨‍👩‍👧‍👦', number: '15+', label: 'Team Members', color: 'from-blue-500 to-cyan-600' },
+    { icon: '🏆', number: '8', label: 'Awards Won', color: 'from-purple-500 to-pink-600' },
+    { icon: '🎪', number: '50+', label: 'Products Available', color: 'from-green-500 to-emerald-600' },
+    { icon: '🚚', number: '100%', label: 'On‑Time Deliveries', color: 'from-red-500 to-orange-600' },
   ];
 
   return (
@@ -460,10 +460,10 @@ const AchievementsSection: React.FC = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="text-gray-800">Nuestros Logros</span>
+            <span className="text-gray-800">Our Achievements</span>
             <br />
             <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              En Números
+              By the Numbers
             </span>
           </h2>
         </div>
@@ -503,12 +503,12 @@ const AchievementsSection: React.FC = () => {
 // ============================================
 const GallerySection: React.FC = () => {
   const images = [
-    { id: 1, emoji: '🎂', label: 'Cumpleaños Mágico' },
-    { id: 2, emoji: '🏰', label: 'Castillo Inflable' },
-    { id: 3, emoji: '🎪', label: 'Trampolín Gigante' },
-    { id: 4, emoji: '🎨', label: 'Decoración Premium' },
-    { id: 5, emoji: '🎉', label: 'Fiesta Familiar' },
-    { id: 6, emoji: '👨‍👩‍👧', label: 'Familias Felices' },
+    { id: 1, emoji: '🎂', label: 'Magical Birthday' },
+    { id: 2, emoji: '🏰', label: 'Inflatable Castle' },
+    { id: 3, emoji: '🎪', label: 'Giant Trampoline' },
+    { id: 4, emoji: '🎨', label: 'Premium Decor' },
+    { id: 5, emoji: '🎉', label: 'Family Party' },
+    { id: 6, emoji: '👨‍👩‍👧', label: 'Happy Families' },
   ];
 
   return (
@@ -518,14 +518,14 @@ const GallerySection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
             <span className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
-              Momentos Inolvidables
+              Unforgettable Moments
             </span>
             <br />
-            <span className="text-gray-800">Que Hemos Creado</span>
+            <span className="text-gray-800">We&apos;ve Created</span>
           </h2>
 
           <p className="text-xl text-gray-600">
-            Cada imagen cuenta una historia de alegría y diversión
+            Every image tells a story of joy and fun.
           </p>
         </div>
 
@@ -578,24 +578,24 @@ const FinalCTASection: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
-            ¿Listo Para Crear <br />
-            Momentos Mágicos? ✨
+            Ready to Create <br />
+            Magical Moments? ✨
           </h2>
 
           <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
-            Únete a las miles de familias que han confiado en nosotros para hacer sus celebraciones inolvidables
+            Join the thousands of families who have trusted us to make their celebrations unforgettable.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
             <button className="group px-10 py-5 bg-white text-orange-600 font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 inline-flex items-center justify-center gap-3">
               <Calendar className="w-6 h-6" />
-              Reserva Tu Fiesta
+              Book Your Party
               <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
             </button>
 
             <button className="px-10 py-5 bg-transparent border-4 border-white text-white font-black text-lg rounded-full hover:bg-white hover:text-orange-600 transition-all duration-300 inline-flex items-center justify-center gap-3">
               <Phone className="w-6 h-6" />
-              Llámanos Ahora
+              Call Us Now
             </button>
           </div>
 
@@ -611,7 +611,7 @@ const FinalCTASection: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-5 h-5" />
-              <span className="font-bold">Todo Estados Unidos</span>
+              <span className="font-bold">Across the United States</span>
             </div>
           </div>
         </div>

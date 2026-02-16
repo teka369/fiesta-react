@@ -14,62 +14,62 @@ interface FAQItem {
 }
 
 const FAQSection: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0); // Primera pregunta abierta por defecto
+  const [openIndex, setOpenIndex] = useState<number | null>(0); // First question open by default
 
   const faqs: FAQItem[] = [
     {
       id: 1,
-      question: '¿Cuánto tiempo antes debo reservar?',
-      answer: 'Recomendamos reservar con al menos 2 semanas de anticipación, especialmente para fines de semana y temporada alta (primavera-verano). Sin embargo, hacemos nuestro mejor esfuerzo para acomodar reservas de último minuto según disponibilidad. ¡Llámanos y lo verificamos!',
+      question: 'How far in advance should I book?',
+      answer: 'We recommend booking at least 2 weeks in advance, especially for weekends and high season (spring-summer). However, we do our best to accommodate last-minute bookings depending on availability. Call us and we will check it for you!',
       icon: Calendar,
       color: 'from-orange-500 to-amber-600'
     },
     {
       id: 2,
-      question: '¿La entrega e instalación están incluidas?',
-      answer: '¡Sí! La entrega, instalación profesional y recogida están 100% incluidas en el precio de alquiler sin costo adicional. Nuestro equipo se encarga de todo: llevar el equipo, instalarlo de manera segura, explicarte cómo funciona, y recogerlo al finalizar. Tú solo disfruta la fiesta.',
+      question: 'Are delivery and setup included?',
+      answer: 'Yes! Delivery, professional setup and pickup are 100% included in the rental price at no extra cost. Our team takes care of everything: bringing the equipment, installing it safely, explaining how it works, and picking it up at the end. You just enjoy the party.',
       icon: Truck,
       color: 'from-yellow-500 to-orange-600'
     },
     {
       id: 3,
-      question: '¿Qué pasa si llueve el día de mi evento?',
-      answer: 'Entendemos que el clima es impredecible. Si hay mal clima, puedes reprogramar tu evento sin cargos adicionales hasta 24 horas antes. Si el mal clima ocurre el día del evento, trabajaremos contigo para encontrar una solución: reprogramar o un crédito para uso futuro.',
+      question: 'What happens if it rains on the day of my event?',
+      answer: 'We understand that weather is unpredictable. If the weather is bad, you can reschedule your event with no extra fees up to 24 hours before. If bad weather happens on the day of the event, we will work with you to find a solution: rescheduling or a credit for future use.',
       icon: Shield,
       color: 'from-amber-500 to-yellow-600'
     },
     {
       id: 4,
-      question: '¿Cuáles son las formas de pago aceptadas?',
-      answer: 'Aceptamos múltiples formas de pago para tu comodidad: tarjetas de crédito/débito (Visa, Mastercard, American Express), efectivo, Zelle, Venmo, PayPal y transferencias bancarias. Requiere un depósito del 50% para confirmar la reserva, el resto se paga el día del evento.',
+      question: 'What payment methods do you accept?',
+      answer: 'We accept multiple payment methods for your convenience: credit/debit cards (Visa, Mastercard, American Express), cash, Zelle, Venmo, PayPal and bank transfers. A 50% deposit is required to confirm the booking; the remaining balance is paid on the event day.',
       icon: CreditCard,
       color: 'from-orange-600 to-amber-500'
     },
     {
       id: 5,
-      question: '¿Los productos son seguros para niños?',
-      answer: 'Absolutamente. La seguridad es nuestra prioridad #1. Todos nuestros productos están certificados, pasan inspecciones rigurosas semanalmente, y cumplen con todos los estándares de seguridad. Están hechos con materiales de alta calidad, no tóxicos, y diseñados específicamente para uso infantil. Además, proporcionamos supervisión e instrucciones de seguridad.',
+      question: 'Are the products safe for children?',
+      answer: 'Absolutely. Safety is our #1 priority. All our products are certified, go through rigorous weekly inspections, and meet all safety standards. They are made with high‑quality, non‑toxic materials and designed specifically for children. We also provide supervision guidelines and safety instructions.',
       icon: Shield,
       color: 'from-amber-600 to-orange-500'
     },
     {
       id: 6,
-      question: '¿Cuánto tiempo puedo tener el alquiler?',
-      answer: 'Nuestro alquiler estándar es de 4-6 horas, perfecto para la mayoría de fiestas. Si necesitas más tiempo, ofrecemos paquetes extendidos de día completo (8 horas) o incluso fin de semana completo. Los precios varían según la duración - contáctanos para un presupuesto personalizado.',
+      question: 'How long can I keep the rental?',
+      answer: 'Our standard rental is 4–6 hours, perfect for most parties. If you need more time, we offer extended packages for a full day (8 hours) or even a full weekend. Prices vary depending on duration – contact us for a custom quote.',
       icon: Clock,
       color: 'from-yellow-600 to-amber-500'
     },
     {
       id: 7,
-      question: '¿Qué incluye el servicio de limpieza?',
-      answer: 'Cada producto pasa por un proceso de limpieza y desinfección profesional de 3 pasos entre cada evento: limpieza profunda con productos certificados, desinfección completa de todas las superficies, e inspección final de calidad. Puedes estar 100% seguro de que todo llega impecable a tu fiesta.',
+      question: 'What does the cleaning service include?',
+      answer: 'Each product goes through a professional 3‑step cleaning and sanitizing process between events: deep cleaning with certified products, full disinfection of all surfaces, and a final quality inspection. You can be 100% sure everything arrives spotless to your party.',
       icon: Shield,
       color: 'from-orange-500 to-yellow-500'
     },
     {
       id: 8,
-      question: '¿Puedo cancelar o cambiar mi reserva?',
-      answer: 'Sí, entendemos que los planes pueden cambiar. Puedes cancelar o modificar tu reserva sin penalización hasta 7 días antes del evento y recibirás un reembolso completo del depósito. Para cancelaciones con menos de 7 días, el depósito se convierte en crédito para uso futuro (válido por 1 año).',
+      question: 'Can I cancel or change my booking?',
+      answer: 'Yes, we understand plans can change. You can cancel or modify your booking without any penalty up to 7 days before the event and you will receive a full refund of your deposit. For cancellations within 7 days, the deposit becomes a credit for future use (valid for 1 year).',
       icon: HelpCircle,
       color: 'from-amber-500 to-orange-600'
     },
@@ -99,19 +99,19 @@ const FAQSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 text-white rounded-full font-black shadow-lg border-4 border-white/50 mb-6 animate-bounce-slow">
             <HelpCircle className="w-6 h-6" />
-            Preguntas Frecuentes
+            Frequently Asked Questions
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-            <span className="text-gray-800">¿Tienes Dudas?</span>
+            <span className="text-gray-800">Have questions?</span>
             <br />
-            <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-              ¡Te Ayudamos!
+              <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+              We can help!
             </span>
           </h2>
 
           <p className="text-xl text-gray-600">
-            Aquí están las respuestas a las preguntas más comunes de nuestros clientes
+            Here are answers to the most common questions from our customers.
           </p>
         </div>
 
@@ -196,10 +196,10 @@ const FAQSection: React.FC = () => {
           <div className="inline-block bg-white rounded-3xl p-8 lg:p-10 shadow-2xl border-4 border-orange-300 max-w-2xl">
             <div className="text-5xl mb-4">🤔</div>
             <h3 className="text-2xl lg:text-3xl font-black text-gray-800 mb-4">
-              ¿Aún Tienes Preguntas?
+              Still have questions?
             </h3>
             <p className="text-lg text-gray-600 mb-6">
-              Estamos aquí para ayudarte. Contáctanos y te responderemos en menos de 1 hora.
+              We are here to help. Contact us and we&apos;ll get back to you in less than 1 hour.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -207,13 +207,13 @@ const FAQSection: React.FC = () => {
                 className="group px-8 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-3"
               >
                 <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                Llámanos: (123) 456-7890
+                Call us: (123) 456-7890
               </a>
               <a
-                href="#contacto"
+                href="#contact"
                 className="px-8 py-4 bg-white border-4 border-orange-400 text-orange-600 font-black text-lg rounded-full hover:bg-orange-50 transition-all duration-300 inline-flex items-center justify-center gap-3"
               >
-                Enviar Mensaje
+                Send message
               </a>
             </div>
           </div>

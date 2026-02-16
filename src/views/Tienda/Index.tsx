@@ -15,24 +15,24 @@ import ProductCard from './components/ProductCard';
 import PackageCard from './components/PackageCard';
 
 const STATUS_OPTIONS: { value: '' | ProductStatus; label: string }[] = [
-  { value: '', label: 'Todos los estados' },
-  { value: 'DISPONIBLE', label: 'Disponible' },
-  { value: 'OCUPADO', label: 'Ocupado' },
-  { value: 'VENDIDO', label: 'Vendido' },
-  { value: 'EN_CAMINO', label: 'En camino' },
+  { value: '', label: 'All statuses' },
+  { value: 'DISPONIBLE', label: 'Available' },
+  { value: 'OCUPADO', label: 'Busy' },
+  { value: 'VENDIDO', label: 'Sold' },
+  { value: 'EN_CAMINO', label: 'On the way' },
 ];
 
 const SORT_OPTIONS: { sortBy: SortByOption; sortOrder: SortOrderOption; label: string }[] = [
-  { sortBy: 'createdAt', sortOrder: 'desc', label: 'Más recientes' },
-  { sortBy: 'createdAt', sortOrder: 'asc', label: 'Más antiguos' },
-  { sortBy: 'title', sortOrder: 'asc', label: 'Nombre A-Z' },
-  { sortBy: 'title', sortOrder: 'desc', label: 'Nombre Z-A' },
-  { sortBy: 'price', sortOrder: 'asc', label: 'Precio menor' },
-  { sortBy: 'price', sortOrder: 'desc', label: 'Precio mayor' },
+  { sortBy: 'createdAt', sortOrder: 'desc', label: 'Newest' },
+  { sortBy: 'createdAt', sortOrder: 'asc', label: 'Oldest' },
+  { sortBy: 'title', sortOrder: 'asc', label: 'Name A-Z' },
+  { sortBy: 'title', sortOrder: 'desc', label: 'Name Z-A' },
+  { sortBy: 'price', sortOrder: 'asc', label: 'Lower price' },
+  { sortBy: 'price', sortOrder: 'desc', label: 'Higher price' },
 ];
 
 // ============================================
-// 🛒 PÁGINA TIENDA - Listado desde backend
+// 🛒 STORE PAGE - List from backend
 // ============================================
 const TiendaIndex: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
