@@ -432,75 +432,6 @@ const ContactFormSection: React.FC = () => {
 };
 
 // ============================================
-// 🗺️ SECCIÓN 3: MAPA
-// ============================================
-import { fetchSettings, type SiteSettings } from '../../lib/api';
-
-const MapSection: React.FC = () => {
-  const [settings, setSettings] = React.useState<SiteSettings | null>(null);
-
-  React.useEffect(() => {
-    fetchSettings()
-      .then((data) => setSettings(data))
-      .catch(() => setSettings({ googleMapsEmbedUrl: null }));
-  }, []);
-
-  return (
-    <section className="relative py-20 lg:py-24 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl lg:text-5xl font-black mb-4">
-            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              Find Us
-            </span>
-          </h2>
-          <p className="text-xl text-gray-600">
-            Visit our office or let us come to you.
-          </p>
-        </div>
-
-        <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-          {settings?.googleMapsEmbedUrl ? (
-            <iframe
-              src={settings.googleMapsEmbedUrl}
-              width="100%"
-              height="500"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Business location"
-            />
-          ) : (
-            <div className="aspect-[16/9] bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center relative">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                               radial-gradient(circle at 70% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)`,
-                }}
-              ></div>
-              <div className="text-center space-y-4 relative z-10">
-                <MapPin className="w-20 h-20 text-blue-600 mx-auto" />
-                <div className="text-2xl font-bold text-gray-700">Google Maps</div>
-                <div className="text-gray-500">Add your Google Maps embed URL in the admin settings.</div>
-              </div>
-
-              {/* Decorative pin */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full">
-                <div className="w-12 h-12 bg-red-500 rounded-full shadow-lg animate-bounce flex items-center justify-center">
-                  <MapPin className="w-8 h-8 text-white" fill="white" />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// ============================================
 // 📞 SECCIÓN 4: CTA FINAL
 // ============================================
 const ContactCTASection: React.FC = () => {
@@ -566,7 +497,6 @@ const Contact: React.FC = () => {
     <main className="relative">
       <ContactHeroSection />
       <ContactFormSection />
-      <MapSection />
       <ContactCTASection />
     </main>
   );
