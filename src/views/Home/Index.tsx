@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Star, 
   CheckCircle, 
@@ -20,8 +21,15 @@ import {
   ChevronLeft,
   ChevronRight,
   Quote,
+  Loader2,
 } from 'lucide-react';
+import { fetchProducts, fetchCategories, fetchProductById } from '../../lib/api';
+import { useAuth } from '../../context/AuthContext';
+import type { Product } from '../../types/product';
+import type { Category } from '../../types/product';
 import FAQSection from './components/Preguntas-Frecuentes';
+
+const HOME_FEATURED_PRODUCT_KEY = 'fiesta_home_featured_product_id';
 
 // ============================================
 // 🎊 SECCIÓN 1: WELCOME
@@ -87,78 +95,132 @@ const WelcomeSection: React.FC = () => {
 };
 
 // ============================================
-// 🎪 SECCIÓN 2: MEJOR SERVICIO (Inflable Grande)
+// 🎪 SECCIÓN 2: MEJOR SERVICIO (producto destacado; admin: seleccionar → Aceptar / Reemplazar)
 // ============================================
-const BestServiceSection: React.FC = () => {
+const BestServiceSection: React.FC<{ products: Product[] }> = ({ products }) => {
+  const { token } = useAuth();
+  const [savedId, setSavedId] = useState<string>(() => localStorage.getItem(HOME_FEATURED_PRODUCT_KEY) ?? '');
+  const [pendingId, setPendingId] = useState<string>(savedId);
+  const [fetchedFeatured, setFetchedFeatured] = useState<Product | null>(null);
+  const [imageError, setImageError] = useState(false);
+
+  const fromList = products.find((p) => p.id === savedId);
+  const featuredProduct = fromList ?? fetchedFeatured ?? products[0];
+  const hasFeatured = !!savedId;
+
+  // Si hay un producto guardado pero no está en la lista (ej. no viene en los primeros 50), cargarlo por ID
+  useEffect(() => {
+    if (!savedId) {
+      setFetchedFeatured(null);
+      return;
+    }
+    if (products.some((p) => p.id === savedId)) {
+      setFetchedFeatured(null);
+      return;
+    }
+    fetchProductById(savedId)
+      .then((p: Product) => setFetchedFeatured(p))
+      .catch(() => setFetchedFeatured(null));
+  }, [savedId, products]);
+
+  const handleAcceptOrReplace = () => {
+    if (!pendingId) return;
+    localStorage.setItem(HOME_FEATURED_PRODUCT_KEY, pendingId);
+    setSavedId(pendingId);
+    setImageError(false);
+  };
+
+  const rawUrl = featuredProduct?.images?.[0]?.url;
+  const imageUrl = typeof rawUrl === 'string' && rawUrl.trim() !== '' ? rawUrl.trim() : undefined;
+  const showImage = !!imageUrl && !imageError;
+
   return (
     <section className="relative py-20 lg:py-24 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 overflow-hidden">
-      {/* Decorative orbs */}
-      <div className="absolute top-20 -left-20 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 -right-20 w-96 h-96 bg-yellow-300/20 rounded-full blur-3xl"></div>
+      <div className="absolute top-20 -left-20 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl" aria-hidden />
+      <div className="absolute bottom-20 -right-20 w-96 h-96 bg-yellow-300/20 rounded-full blur-3xl" aria-hidden />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left - Image */}
-          <div className="relative">
-            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 group">
-              {/* Border animado */}
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-amber-400 to-yellow-400 p-3 rounded-[3rem]">
-                <div className="w-full h-full bg-white rounded-[2.7rem] overflow-hidden">
-                  {/* 
-                    ============================================
-                    📸 IMAGEN DEL INFLABLE GRANDE
-                    ============================================
-                    Reemplaza con: <img src="/images/inflable-grande.jpg" />
-                  */}
-                  <div className="aspect-[4/3] bg-gradient-to-br from-orange-200 to-yellow-200 flex items-center justify-center">
-                    <div className="text-center space-y-4">
-                      <div className="text-9xl">🏰</div>
-                      <div className="text-2xl font-bold text-gray-700">Inflable Grande Aquí</div>
-                      <div className="text-gray-500">Imagen del mejor servicio</div>
-                    </div>
+          {/* Contenedor con tamaño fijo para que la imagen/placeholder siempre ocupen espacio */}
+          <div className="relative w-full aspect-[4/3] max-h-[480px] lg:max-h-[560px] rounded-[3rem] overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-amber-400 to-yellow-400 p-2 lg:p-3 rounded-[3rem]">
+              <div className="w-full h-full bg-white rounded-[2.5rem] lg:rounded-[2.7rem] overflow-hidden flex items-center justify-center">
+                {showImage ? (
+                  <img
+                    src={imageUrl}
+                    alt={featuredProduct?.title ?? ''}
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                    onError={() => setImageError(true)}
+                  />
+                ) : (
+                  <div className="w-full h-full min-h-[200px] bg-gradient-to-br from-orange-100 to-yellow-100 flex flex-col items-center justify-center gap-4 p-6 text-center">
+                    <span className="text-8xl" role="img" aria-hidden>🏰</span>
+                    <span className="text-xl lg:text-2xl font-bold text-gray-700">
+                      {featuredProduct?.title ?? 'Producto destacado'}
+                    </span>
                   </div>
-                </div>
-              </div>
-
-              {/* Badge flotante */}
-              <div className="absolute top-6 right-6 bg-red-500 text-white font-black px-6 py-3 rounded-full rotate-12 shadow-2xl animate-bounce border-4 border-white">
-                ¡FAVORITO! 👑
+                )}
               </div>
             </div>
-
-            {/* Floating emoji */}
-            <div className="absolute -bottom-6 -left-6 text-6xl animate-bounce" style={{ animationDuration: '3s' }}>
-              🎈
+            <div className="absolute top-4 right-4 lg:top-6 lg:right-6 bg-red-500 text-white font-black px-4 py-2 lg:px-6 lg:py-3 rounded-full rotate-12 shadow-2xl border-4 border-white text-sm lg:text-base">
+              ¡FAVORITO! 👑
             </div>
-            <div className="absolute -top-6 -right-6 text-6xl animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>
-              ⭐
-            </div>
+            <div className="absolute -bottom-4 -left-4 text-5xl lg:text-6xl animate-bounce pointer-events-none" style={{ animationDuration: '3s' }} aria-hidden>🎈</div>
+            <div className="absolute -top-4 -right-4 text-5xl lg:text-6xl animate-bounce pointer-events-none" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} aria-hidden>⭐</div>
           </div>
 
-          {/* Right - Content */}
           <div className="space-y-6">
+            {token && (
+              <div className="p-4 bg-white rounded-xl border-2 border-orange-200">
+                <label className="block text-sm font-bold text-gray-700 mb-2">Admin: producto destacado en esta sección</label>
+                <select
+                  value={pendingId}
+                  onChange={(e) => setPendingId(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border-2 border-orange-200 font-semibold mb-3"
+                >
+                  <option value="">— Seleccionar producto —</option>
+                  {products.filter((p) => p.isActive !== false).map((p) => (
+                    <option key={p.id} value={p.id}>{p.title}</option>
+                  ))}
+                </select>
+                {pendingId && (
+                  <button
+                    type="button"
+                    onClick={handleAcceptOrReplace}
+                    className="w-full py-3 rounded-xl font-black text-white bg-orange-500 hover:bg-orange-600 transition-colors"
+                  >
+                    {hasFeatured ? 'Reemplazar' : 'Aceptar'}
+                  </button>
+                )}
+              </div>
+            )}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-full font-bold text-sm">
               <TrendingUp className="w-4 h-4" />
               El Más Solicitado
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
-              <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-                El Mejor Servicio
-              </span>
+              <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">El Mejor Servicio</span>
               <br />
               <span className="text-gray-800">Para Tu Fiesta</span>
             </h2>
 
             <p className="text-xl text-gray-600 leading-relaxed">
-              Nuestro inflable estrella ha traído sonrisas a miles de niños. 
-              Con <span className="font-bold text-orange-600">instalación profesional</span>, 
-              supervisión incluida y limpieza premium, es la opción perfecta para 
-              hacer de tu evento algo <span className="font-bold text-orange-600">verdaderamente especial</span>.
+              {featuredProduct?.description ? (
+                <>
+                  {featuredProduct.description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 220)}
+                  {featuredProduct.description.length > 220 ? '...' : ''}
+                </>
+              ) : (
+                <>
+                  Nuestro producto estrella ha traído sonrisas a miles de niños.
+                  Con <span className="font-bold text-orange-600">instalación profesional</span> y
+                  <span className="font-bold text-orange-600"> calidad premium</span>.
+                </>
+              )}
             </p>
 
-            {/* Features */}
             <div className="space-y-4">
               {[
                 { icon: Shield, text: 'Certificado de Seguridad' },
@@ -166,10 +228,7 @@ const BestServiceSection: React.FC = () => {
                 { icon: Clock, text: 'Disponible 24/7' },
                 { icon: ThumbsUp, text: 'Garantía de Diversión' },
               ].map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:translate-x-2"
-                >
+                <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:translate-x-2">
                   <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-full flex items-center justify-center shadow-lg">
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
@@ -178,12 +237,16 @@ const BestServiceSection: React.FC = () => {
               ))}
             </div>
 
-            {/* CTA */}
-            <button className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 flex items-center gap-3">
-              <Calendar className="w-6 h-6" />
-              Reservar Ahora
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </button>
+            {featuredProduct && (
+              <Link
+                to={`/tienda/${featuredProduct.slug}`}
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
+              >
+                <Calendar className="w-6 h-6" />
+                Reservar Ahora
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -192,127 +255,96 @@ const BestServiceSection: React.FC = () => {
 };
 
 // ============================================
-// 🌟 SECCIÓN 3: PRODUCTOS DESTACADOS
+// 🌟 SECCIÓN 3: PRODUCTOS DESTACADOS (desde API, rotación)
 // ============================================
-const FeaturedProductsSection: React.FC = () => {
-  const products = [
-    {
-      id: 1,
-      name: 'Trampolín Gigante',
-      category: 'Trampolines',
-      price: 'Desde $150',
-      image: '/images/trampolin.jpg',
-      badge: 'Popular',
-      badgeColor: 'bg-red-500',
-      emoji: '🎪'
-    },
-    {
-      id: 2,
-      name: 'Castillo Inflable',
-      category: 'Inflables',
-      price: 'Desde $200',
-      image: '/images/castillo.jpg',
-      badge: 'Nuevo',
-      badgeColor: 'bg-green-500',
-      emoji: '🏰'
-    },
-    {
-      id: 3,
-      name: 'Mesas y Sillas Premium',
-      category: 'Mobiliario',
-      price: 'Desde $80',
-      image: '/images/mesas.jpg',
-      badge: 'Oferta',
-      badgeColor: 'bg-orange-500',
-      emoji: '🪑'
-    },
-    {
-      id: 4,
-      name: 'Decoración Temática',
-      category: 'Decoración',
-      price: 'Desde $120',
-      image: '/images/decoracion.jpg',
-      badge: 'Premium',
-      badgeColor: 'bg-purple-500',
-      emoji: '🎨'
-    },
-  ];
+function formatPrice(price: string | number): string {
+  const n = typeof price === 'string' ? parseFloat(price) : price;
+  if (Number.isNaN(n)) return 'Consultar';
+  return new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' }).format(n);
+}
+
+const BADGES = ['Popular', 'Nuevo', 'Oferta', 'Destacado'];
+const BADGE_COLORS = ['bg-red-500', 'bg-green-500', 'bg-orange-500', 'bg-purple-500'];
+
+const FeaturedProductsSection: React.FC<{ products: Product[] }> = ({ products }) => {
+  const [offset, setOffset] = useState(0);
+  const total = products.length;
+  const visible = total <= 4 ? products : [...products, ...products].slice(offset, offset + 4);
+
+  useEffect(() => {
+    if (total <= 4) return;
+    const t = setInterval(() => {
+      setOffset((prev) => (prev + 1) % total);
+    }, 4000);
+    return () => clearInterval(t);
+  }, [total]);
+
+  if (products.length === 0) return null;
 
   return (
     <section className="relative py-20 lg:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
-        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full border-2 border-orange-200 mb-6">
             <Gift className="w-5 h-5 text-orange-500" />
             <span className="font-bold text-orange-700">Productos Destacados</span>
           </div>
-
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              Lo Más Solicitado
-            </span>
+            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">Lo Más Solicitado</span>
             <br />
             <span className="text-gray-800">Por Nuestros Clientes</span>
           </h2>
-
-          <p className="text-xl text-gray-600">
-            Descubre los favoritos de nuestras familias felices
-          </p>
+          <p className="text-xl text-gray-600">Descubre los favoritos de nuestras familias felices</p>
         </div>
 
-        {/* Products Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map((product, index) => (
-            <div
-              key={product.id}
-              className="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Image */}
-              <div className="relative aspect-[4/3] bg-gradient-to-br from-orange-100 to-yellow-100 overflow-hidden">
-                {/* Placeholder - Reemplazar con imagen real */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="text-7xl mb-4">{product.emoji}</div>
-                  <div className="text-sm text-gray-500">Imagen del producto</div>
+          {visible.map((product, index) => {
+            const imageUrl = product.images?.[0]?.url;
+            const badge = BADGES[index % BADGES.length];
+            const badgeColor = BADGE_COLORS[index % BADGE_COLORS.length];
+            return (
+              <Link
+                key={product.id}
+                to={`/tienda/${product.slug}`}
+                className="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2 block"
+              >
+                <div className="relative aspect-[4/3] bg-gradient-to-br from-orange-100 to-yellow-100 overflow-hidden">
+                  {imageUrl ? (
+                    <img src={imageUrl} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <div className="text-7xl mb-4">🎪</div>
+                      <div className="text-sm text-gray-500">Sin imagen</div>
+                    </div>
+                  )}
+                  <div className={`absolute top-4 right-4 ${badgeColor} text-white font-black px-4 py-2 rounded-full text-sm shadow-lg`}>{badge}</div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                    <span className="px-6 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg">Ver Detalles</span>
+                  </div>
                 </div>
-
-                {/* Badge */}
-                <div className={`absolute top-4 right-4 ${product.badgeColor} text-white font-black px-4 py-2 rounded-full text-sm shadow-lg`}>
-                  {product.badge}
+                <div className="p-6 space-y-3">
+                  {product.category && <div className="text-sm font-bold text-orange-500">{product.category.name}</div>}
+                  <h3 className="text-xl font-black text-gray-800 line-clamp-2">{product.title}</h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-black text-orange-600">{formatPrice(product.price)}</span>
+                    <span className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                      <ArrowRight className="w-5 h-5" />
+                    </span>
+                  </div>
                 </div>
-
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                  <button className="px-6 py-3 bg-white text-orange-600 font-bold rounded-full shadow-lg hover:scale-105 transition-transform">
-                    Ver Detalles
-                  </button>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 space-y-3">
-                <div className="text-sm font-bold text-orange-500">{product.category}</div>
-                <h3 className="text-xl font-black text-gray-800">{product.name}</h3>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-black text-orange-600">{product.price}</span>
-                  <button className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Decorative border */}
-              <div className="absolute inset-0 border-4 border-orange-400 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-            </div>
-          ))}
+                <div className="absolute inset-0 border-4 border-orange-400 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </Link>
+            );
+          })}
         </div>
 
-        {/* CTA Button */}
         <div className="text-center mt-12">
-          <button className="px-10 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300">
+          <Link
+            to="/tienda"
+            className="inline-block px-10 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
+          >
             Ver Todos Los Productos →
-          </button>
+          </Link>
         </div>
       </div>
     </section>
@@ -417,69 +449,69 @@ const WhyChooseUsSection: React.FC = () => {
 };
 
 // ============================================
-// 🎯 SECCIÓN 5: EXPLORA NUESTROS ALQUILERES
+// 🎯 SECCIÓN 5: EXPLORA NUESTROS ALQUILERES (categorías reales + productos)
 // ============================================
-const ExploreRentalsSection: React.FC = () => {
-  const categories = [
-    { name: 'Trampolines', count: '15+', icon: '🎪', color: 'from-red-400 to-pink-500' },
-    { name: 'Inflables', count: '20+', icon: '🏰', color: 'from-blue-400 to-cyan-500' },
-    { name: 'Mesas & Sillas', count: '30+', icon: '🪑', color: 'from-green-400 to-emerald-500' },
-    { name: 'Decoraciones', count: '25+', icon: '🎨', color: 'from-purple-400 to-pink-500' },
-    { name: 'Juegos', count: '18+', icon: '🎮', color: 'from-orange-400 to-amber-500' },
-    { name: 'Sonido', count: '10+', icon: '🎵', color: 'from-yellow-400 to-orange-500' },
-  ];
+const CATEGORY_ICONS: Record<string, string> = {
+  trampolines: '🎪',
+  inflables: '🏰',
+  mesas: '🪑',
+  decoracion: '🎨',
+  juegos: '🎮',
+  sonido: '🎵',
+};
+const CATEGORY_COLORS = ['from-red-400 to-pink-500', 'from-blue-400 to-cyan-500', 'from-green-400 to-emerald-500', 'from-purple-400 to-pink-500', 'from-orange-400 to-amber-500', 'from-yellow-400 to-orange-500'];
+
+const ExploreRentalsSection: React.FC<{ categories: Category[]; productCountByCategory: Record<string, number>; totalProducts: number }> = ({
+  categories,
+  productCountByCategory,
+  totalProducts,
+}) => {
+  const activeCategories = categories.filter((c) => c.isActive !== false);
 
   return (
     <section className="relative py-20 lg:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
-        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
-              Explora Nuestros
-            </span>
+            <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">Explora Nuestros</span>
             <br />
             <span className="text-gray-800">Alquileres</span>
           </h2>
-
           <p className="text-xl text-gray-600">
-            Tenemos más de <span className="font-bold text-orange-600">100+ productos</span> para hacer tu fiesta perfecta
+            Tenemos más de <span className="font-bold text-orange-600">{totalProducts}+ productos</span> para hacer tu fiesta perfecta
           </p>
         </div>
 
-        {/* Categories Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-          {categories.map((category, index) => (
-            <div
-              key={index}
-              className="group relative bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl p-6 text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border-2 border-orange-200 hover:border-orange-400"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Icon */}
-              <div className="text-6xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">
-                {category.icon}
-              </div>
-
-              {/* Name */}
-              <h3 className="text-lg font-black text-gray-800 mb-2">{category.name}</h3>
-
-              {/* Count */}
-              <div className={`inline-block px-4 py-1 bg-gradient-to-r ${category.color} text-white font-bold rounded-full text-sm`}>
-                {category.count} opciones
-              </div>
-
-              {/* Hover effect */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-300`}></div>
-            </div>
-          ))}
+          {activeCategories.map((category, index) => {
+            const count = productCountByCategory[category.id] ?? 0;
+            const icon = CATEGORY_ICONS[category.slug?.toLowerCase() ?? ''] ?? '🎪';
+            const color = CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+            return (
+              <Link
+                key={category.id}
+                to={`/tienda?categoryId=${category.id}`}
+                className="group relative bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl p-6 text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-orange-200 hover:border-orange-400 block"
+              >
+                <div className="text-6xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">{icon}</div>
+                <h3 className="text-lg font-black text-gray-800 mb-2">{category.name}</h3>
+                <div className={`inline-block px-4 py-1 bg-gradient-to-r ${color} text-white font-bold rounded-full text-sm`}>
+                  {count} {count === 1 ? 'producto' : 'opciones'}
+                </div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-300`} />
+              </Link>
+            );
+          })}
         </div>
 
-        {/* CTA */}
         <div className="text-center mt-12">
-          <button className="px-10 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
+          <Link
+            to="/tienda"
+            className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
+          >
             Ver Catálogo Completo
             <ArrowRight className="w-6 h-6" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>
@@ -536,11 +568,13 @@ const DeliveryAreasSection: React.FC = () => {
               </div>
             </div>
 
-            {/* CTA */}
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
+            >
               <Phone className="w-6 h-6" />
               Consulta Tu Área
-            </button>
+            </Link>
           </div>
 
           {/* Right - Map Placeholder */}
@@ -759,17 +793,55 @@ const QuestionsSection: React.FC = () => {
 // 🎯 MAIN COMPONENT
 // ============================================
 const Main: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      fetchProducts({ limit: 50, sortBy: 'createdAt', sortOrder: 'desc' }).then((r) => r.data ?? []),
+      fetchCategories().then((c) => (Array.isArray(c) ? c : [])),
+    ])
+      .then(([data, cats]) => {
+        setProducts(data);
+        setCategories(cats);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  const productCountByCategory: Record<string, number> = {};
+  products.forEach((p) => {
+    if (p.categoryId) {
+      productCountByCategory[p.categoryId] = (productCountByCategory[p.categoryId] ?? 0) + 1;
+    }
+  });
+  const totalProducts = products.length;
+
   return (
     <main className="relative">
       <WelcomeSection />
-      <BestServiceSection />
-      <FeaturedProductsSection />
+      {loading ? (
+        <section className="py-20 flex justify-center">
+          <Loader2 className="w-12 h-12 text-orange-500 animate-spin" />
+        </section>
+      ) : (
+        <>
+          <BestServiceSection products={products} />
+          <FeaturedProductsSection products={products} />
+        </>
+      )}
       <WhyChooseUsSection />
-      <ExploreRentalsSection />
+      {!loading && (
+        <ExploreRentalsSection
+          categories={categories}
+          productCountByCategory={productCountByCategory}
+          totalProducts={totalProducts}
+        />
+      )}
       <DeliveryAreasSection />
       <TestimonialsSection />
-      <QuestionsSection/>
-       {/* Esta es la que recibirá el scroll */}
+      <QuestionsSection />
     </main>
   );
 };

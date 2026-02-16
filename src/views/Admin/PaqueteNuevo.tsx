@@ -1,0 +1,39 @@
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { createPackage } from '../../lib/api';
+import PaqueteForm from './PaqueteForm';
+
+export default function PaqueteNuevo() {
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (data: {
+    title: string;
+    description?: string;
+    specialPrice: number;
+    isActive: boolean;
+    items?: { productId: string; quantity: number }[];
+  }) => {
+    setIsSubmitting(true);
+    try {
+      await createPackage(data);
+      navigate('/admin', { replace: true });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-gray-50 pt-28 pb-20">
+      <div className="container mx-auto px-4">
+        <Link to="/admin" className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 font-semibold mb-8">
+          <ArrowLeft className="w-5 h-5" />
+          Volver al panel
+        </Link>
+        <h1 className="text-2xl font-black text-gray-800 mb-8">Nuevo paquete</h1>
+        <PaqueteForm onSubmit={handleSubmit} onCancel={() => navigate('/admin')} isSubmitting={isSubmitting} />
+      </div>
+    </main>
+  );
+}

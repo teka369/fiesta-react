@@ -1,33 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Instagram, ShoppingCart, Search, } from 'lucide-react';
-// Importamos HashLink para que el scroll funcione entre páginas
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Menu, X, Facebook, Instagram, ShoppingCart, Search, ChevronDown, LayoutDashboard, LogOut } from 'lucide-react';
 import { HashLink as Link } from 'react-router-hash-link';
-
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 const Navbar: React.FC = () => {
+  const navigate = useNavigate();
+  const { token, logout } = useAuth();
+  const { totalItems } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [infoDropdownOpen, setInfoDropdownOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // CORRECCIÓN DE RUTAS: 
-  // Agregamos "/" antes de los "#" para que React sepa volver al Home si estás en "Nosotros"
-  const navItems = [
-    { name: 'Home', href: '/', emoji: '🏠' },
-    { name: 'Alquileres', href: '/#alquileres', emoji: '🎪' },
-    { name: 'Sobre Nosotros', href: '/nosotros', emoji: '⭐' }, // Ruta a tu página de Nosotros
+  useEffect(() => {
+    const close = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setInfoDropdownOpen(false);
+    };
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, []);
+
+  const infoLinks = [
+    { name: 'Sobre Nosotros', href: '/nosotros', emoji: '⭐' },
     { name: 'Preguntas Frecuentes', href: '/#preguntas', emoji: '❓' },
     { name: 'Contáctenos', href: '/contact', emoji: '📞' },
   ];
+
+  const navItemsSinLogin = [
+    { name: 'Home', href: '/', emoji: '🏠' },
+    { name: 'Tienda', href: '/tienda', emoji: '🛒' },
+    ...infoLinks,
+  ];
+
+  const navItemsConLogin = [
+    { name: 'Home', href: '/', emoji: '🏠' },
+    { name: 'Tienda', href: '/tienda', emoji: '🛒' },
+  ];
+  const navItems = token ? navItemsConLogin : navItemsSinLogin;
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    if (q) {
+      navigate(`/tienda?search=${encodeURIComponent(q)}`);
+      setIsMobileMenuOpen(false);
+    } else {
+      navigate('/tienda');
+    }
+  };
 
   return (
     <header className="fixed w-full z-50 transition-all duration-500">
@@ -158,14 +189,64 @@ const Navbar: React.FC = () => {
                   )}
                 </Link>
               ))}
+              {token && (
+                <>
+                  <div className="relative" ref={dropdownRef}>
+                    <button
+                      type="button"
+                      onClick={() => setInfoDropdownOpen(!infoDropdownOpen)}
+                      className="relative px-4 xl:px-5 py-3 font-bold rounded-2xl transition-all duration-300 flex items-center gap-2 text-gray-700 hover:text-orange-600"
+                    >
+                      <span className="text-lg">📋</span>
+                      <span>Información</span>
+                      <ChevronDown className={`w-4 h-4 transition-transform ${infoDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {infoDropdownOpen && (
+                      <div className="absolute top-full left-0 mt-1 py-2 w-56 bg-white rounded-2xl shadow-xl border-2 border-orange-200 z-50">
+                        {infoLinks.map((item) => (
+                          <Link
+                            key={item.name}
+                            smooth
+                            to={item.href}
+                            onClick={() => { setInfoDropdownOpen(false); setIsMobileMenuOpen(false); }}
+                            className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-bold rounded-xl mx-1"
+                          >
+                            <span>{item.emoji}</span>
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <Link
+                    to="/admin"
+                    onClick={() => setActiveSection('admin')}
+                    className="relative px-4 xl:px-5 py-3 font-bold rounded-2xl transition-all duration-300 flex items-center gap-2 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white shadow-lg hover:scale-105"
+                  >
+                    <LayoutDashboard className="w-5 h-5" />
+                    Administrar tienda
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => { logout(); navigate('/'); setIsMobileMenuOpen(false); }}
+                    className="px-4 xl:px-5 py-3 font-bold rounded-2xl border-2 border-orange-200 text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-all duration-300 flex items-center gap-2"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    Cerrar sesión
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Search + CTA + Mobile Menu */}
             <div className="flex items-center gap-3">
               
-              <div className={`hidden md:flex items-center transition-all duration-500 ${
-                isSearchFocused ? 'w-64' : 'w-48'
-              }`}>
+              <form
+                onSubmit={handleSearchSubmit}
+                className={`hidden md:flex items-center transition-all duration-500 ${
+                  isSearchFocused ? 'w-64' : 'w-48'
+                }`}
+              >
                 <div className={`relative w-full transition-all duration-300 ${
                   isSearchFocused ? 'scale-105' : ''
                 }`}>
@@ -189,22 +270,20 @@ const Navbar: React.FC = () => {
                     size={20}
                   />
                 </div>
-              </div>
+              </form>
 
-              {/* CTA Button - También con HashLink */}
-              <Link
-                smooth
-                to="/#reservar"
-                className="hidden sm:flex items-center gap-2 px-5 lg:px-7 py-3 lg:py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-sm lg:text-base rounded-full shadow-2xl shadow-orange-300 hover:shadow-3xl hover:shadow-amber-400 hover:scale-110 transition-all duration-300 relative overflow-hidden group"
+              <RouterLink
+                to="/carrito"
+                className="relative p-3 rounded-2xl bg-orange-100 text-orange-600 hover:bg-orange-200 transition-all flex items-center justify-center"
+                aria-label="Carrito"
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  <span className="animate-bounce">🎉</span>
-                  ¡Reserva Ya!
-                  <ShoppingCart size={18} className="group-hover:rotate-12 transition-transform duration-300" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                <div className="absolute inset-0 rounded-full bg-orange-400 animate-ping opacity-30"></div>
-              </Link>
+                <ShoppingCart size={22} />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[1.25rem] h-5 px-1 flex items-center justify-center bg-orange-500 text-white text-xs font-black rounded-full">
+                    {totalItems > 99 ? '99+' : totalItems}
+                  </span>
+                )}
+              </RouterLink>
 
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -216,17 +295,18 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile Search Bar */}
-          <div className="md:hidden pb-4">
+          <form onSubmit={handleSearchSubmit} className="md:hidden pb-4">
             <div className="relative">
               <input
                 type="text"
                 placeholder="🔍 Buscar..."
                 value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-full bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 border-2 border-orange-300 font-semibold outline-none focus:border-orange-500 focus:shadow-lg transition-all duration-300"
               />
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-500" size={20} />
             </div>
-          </div>
+          </form>
 
           {/* Mobile Menu - Cambiados a HashLink */}
           <div 
@@ -235,7 +315,7 @@ const Navbar: React.FC = () => {
             }`}
           >
             <div className="flex flex-col gap-3 py-4">
-              {navItems.map((item,) => (
+              {navItems.map((item) => (
                 <Link
                   key={item.name}
                   smooth
@@ -254,17 +334,38 @@ const Navbar: React.FC = () => {
                   <span>{item.name}</span>
                 </Link>
               ))}
-              
-              <Link
-                smooth
-                to="/#reservar"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-2 px-5 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black rounded-2xl text-center shadow-2xl flex items-center justify-center gap-2"
-              >
-                <span className="animate-bounce">🎉</span>
-                ¡Reserva Ahora!
-                <span className="animate-bounce" style={{animationDelay: '0.2s'}}>🎈</span>
-              </Link>
+              {token && (
+                <>
+                  {infoLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      smooth
+                      to={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-5 py-4 font-bold rounded-2xl bg-orange-50 text-gray-700 flex items-center gap-3"
+                    >
+                      <span className="text-2xl">{item.emoji}</span>
+                      {item.name}
+                    </Link>
+                  ))}
+                  <Link
+                    to="/admin"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="px-5 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-2xl flex items-center justify-center gap-2"
+                  >
+                    <LayoutDashboard className="w-5 h-5" />
+                    Administrar tienda
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => { logout(); navigate('/'); setIsMobileMenuOpen(false); }}
+                    className="px-5 py-4 font-bold rounded-2xl border-2 border-orange-200 text-gray-700 flex items-center gap-2"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    Cerrar sesión
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
