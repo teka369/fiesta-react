@@ -54,7 +54,6 @@ const Carousel = React.memo<{ slides: CarouselSlide[] }>(function Carousel({ sli
     );
   }
 
-  const current = slides[currentIndex];
   const placeholderSvg = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f59e0b" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="48" text-anchor="middle" fill="%23fff"%3E🎪%3C/text%3E%3C/svg%3E`;
 
   return (
@@ -131,21 +130,21 @@ const Header: React.FC = () => {
   const [floatingStyles, setFloatingStyles] = useState<Array<{ left: number; top: number; size: number; emoji: string; duration: number; delay: number }>>([]);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | undefined>(undefined);
   const lastMoveRef = useRef(0);
 
   // Cargar productos para el carrusel (solo los que tengan imagen, máximo 8)
   useEffect(() => {
     fetchProducts({ limit: 20, sortBy: 'createdAt', sortOrder: 'desc' })
-      .then((res) => {
+      .then((res: { data?: Array<{ id: string; title?: string; images?: Array<{ url?: string; alt?: string }> }> }) => {
         const list = res?.data ?? [];
-        const withImage = list.filter((p) => p.images?.[0]?.url);
+        const withImage = list.filter((p: { images?: Array<{ url?: string }> }) => p.images?.[0]?.url);
         const slides: CarouselSlide[] = (withImage.length ? withImage : list)
           .slice(0, 8)
-          .map((p) => ({
+          .map((p: { id: string; title?: string; images?: Array<{ url?: string; alt?: string }> }) => ({
             id: p.id,
             url: p.images?.[0]?.url ?? '',
-            alt: p.images?.[0]?.alt ?? p.title,
+            alt: p.images?.[0]?.alt ?? p.title ?? '',
             title: p.title,
           }));
         setCarouselSlides(slides);

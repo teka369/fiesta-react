@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { fetchProfile, updateProfile } from '../../lib/api';
 
 export default function Perfil() {
-  const { user, updateUser } = useAuth();
+  const { updateUser } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');

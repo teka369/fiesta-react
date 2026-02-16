@@ -67,7 +67,7 @@ const ProductoDetalle: React.FC = () => {
     if (!product?.id) return;
     setContactLoading(true);
     try {
-      const { url, label } = await fetchContactLink(product.id, channel);
+      const { url } = await fetchContactLink(product.id, channel);
       if (url) window.open(url, '_blank');
     } finally {
       setContactLoading(false);

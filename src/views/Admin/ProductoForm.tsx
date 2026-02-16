@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { fetchCategories } from '../../lib/api';
-import type { Product, ProductSaleType } from '../../types/product';
+import type { Product, ProductSaleType, ProductStatus } from '../../types/product';
 import type { Category } from '../../types/product';
 
 const STATUS_OPTIONS = [
@@ -48,7 +48,7 @@ export default function ProductoForm({
   const [price, setPrice] = useState(
     initialData?.price != null ? String(initialData.price) : ''
   );
-  const [status, setStatus] = useState(initialData?.status ?? 'DISPONIBLE');
+  const [status, setStatus] = useState<ProductStatus>(initialData?.status ?? 'DISPONIBLE');
   const [saleType, setSaleType] = useState<ProductSaleType>(
     (initialData?.saleType as ProductSaleType) ?? 'ALQUILABLE'
   );
@@ -189,7 +189,7 @@ export default function ProductoForm({
           <label className="block text-sm font-bold text-gray-700 mb-1">Estado</label>
           <select
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => setStatus(e.target.value as ProductStatus)}
             className="px-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none"
           >
             {STATUS_OPTIONS.map((opt) => (
