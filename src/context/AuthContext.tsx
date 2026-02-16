@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { getStoredToken, getStoredUser, setStoredAuth, clearStoredAuth, updateStoredUser } from '../lib/auth-storage';
 
-const API_BASE = import.meta.env.VITE_API_URL ?? '/api';
+const API_BASE = (import.meta.env.VITE_API_URL ?? '/api').replace(/\/$/, '');
 
 export interface AuthUser {
   id: string;

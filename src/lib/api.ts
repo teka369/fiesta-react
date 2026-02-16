@@ -1,11 +1,11 @@
 /**
  * Cliente API para el backend Nest.
- * Base URL: en desarrollo usa proxy /api -> backend (vite.config).
+ * Desarrollo: proxy /api -> backend (vite.config).
+ * Producción: VITE_API_URL en Vercel debe ser la URL del backend en Render (sin / final).
  */
-
 import { getStoredToken } from './auth-storage';
 
-const API_BASE = import.meta.env.VITE_API_URL ?? '/api';
+const API_BASE = (import.meta.env.VITE_API_URL ?? '/api').replace(/\/$/, '');
 
 function authHeaders(): HeadersInit {
   const token = getStoredToken();
