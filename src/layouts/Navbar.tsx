@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Menu, X, Facebook, Instagram, ShoppingCart, Search, ChevronDown, LayoutDashboard, LogOut } from 'lucide-react';
+import { Menu, X, Facebook, Instagram, ShoppingCart, Search, ChevronDown, LayoutDashboard, LogOut, MessageCircle } from 'lucide-react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Navbar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { phone } = useSiteSettings();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -72,11 +74,20 @@ const Navbar: React.FC = () => {
           <div className="flex flex-wrap justify-between items-center text-white text-sm">
             <div className="flex items-center gap-4 md:gap-6">
               <a 
-                href="tel:+1234567890" 
+                href={`tel:${phone}`} 
                 className="flex items-center gap-2 hover:scale-110 transition-transform duration-300 bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-sm"
               >
                 <div className="animate-bounce">📞</div>
-                <span className="font-bold">(123) 456-7890</span>
+                <span className="font-bold">{phone}</span>
+              </a>
+              <a 
+                href={`https://wa.me/${phone.replace(/\D/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:scale-110 transition-transform duration-300 bg-green-500/80 px-3 py-1.5 rounded-full backdrop-blur-sm"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle size={16} />
               </a>
               <a 
                 href="mailto:info@sunnypartyrentals.com" 

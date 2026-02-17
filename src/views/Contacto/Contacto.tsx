@@ -16,11 +16,14 @@ import {
   Building
 } from 'lucide-react';
 import { submitContact } from '../../lib/api';
+import { useSiteSettings } from '../../hooks/useSiteSettings';
 
 // ============================================
 // 🎯 SECCIÓN 1: HERO - CONTACTO
 // ============================================
 const ContactHeroSection: React.FC = () => {
+  const { phone } = useSiteSettings();
+  
   return (
     <section className="relative pt-32 lg:pt-40 pb-16 bg-gradient-to-b from-orange-50 via-amber-50 to-yellow-50 overflow-hidden">
       {/* Decorative elements */}
@@ -58,11 +61,11 @@ const ContactHeroSection: React.FC = () => {
           {/* Quick contact buttons */}
           <div className="flex flex-wrap justify-center gap-4 pt-4">
             <a
-              href="tel:+1234567890"
+              href={`tel:${phone}`}
               className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-3"
             >
               <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-              (123) 456-7890
+              {phone}
             </a>
             <a
               href="mailto:info@sunnyparty.com"
@@ -82,6 +85,8 @@ const ContactHeroSection: React.FC = () => {
 // 📝 SECCIÓN 2: FORMULARIO DE CONTACTO
 // ============================================
 const ContactFormSection: React.FC = () => {
+  const { phone } = useSiteSettings();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -318,7 +323,7 @@ const ContactFormSection: React.FC = () => {
             <div className="space-y-4">
               {/* Phone */}
               <a
-                href="tel:+1234567890"
+                href={`tel:${phone}`}
                 className="group block bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-orange-200 hover:border-orange-400 hover:-translate-y-1"
               >
                 <div className="flex items-start gap-4">
@@ -327,7 +332,7 @@ const ContactFormSection: React.FC = () => {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-black text-gray-800 mb-1">Phone</h3>
-                    <p className="text-2xl font-black text-orange-600">(123) 456-7890</p>
+                    <p className="text-2xl font-black text-orange-600">{phone}</p>
                     <p className="text-sm text-gray-600 mt-1">Available 24/7</p>
                   </div>
                 </div>
@@ -415,7 +420,7 @@ const ContactFormSection: React.FC = () => {
                   <Instagram className="w-6 h-6 text-white" />
                 </a>
                 <a
-                  href="https://wa.me/1234567890"
+                  href={`https://wa.me/${phone.replace(/\D/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300"
@@ -435,6 +440,8 @@ const ContactFormSection: React.FC = () => {
 // 📞 SECCIÓN 4: CTA FINAL
 // ============================================
 const ContactCTASection: React.FC = () => {
+  const { phone } = useSiteSettings();
+  
   return (
     <section className="relative py-20 lg:py-24 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 overflow-hidden">
       {/* Decorative elements */}
@@ -459,7 +466,7 @@ const ContactCTASection: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
             <a
-              href="tel:+1234567890"
+              href={`tel:${phone}`}
               className="group px-10 py-5 bg-white text-orange-600 font-black text-lg rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 inline-flex items-center justify-center gap-3"
             >
               <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />

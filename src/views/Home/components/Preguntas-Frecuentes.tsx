@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, HelpCircle, Clock, Truck, CreditCard, Shield, Calendar, Phone } from 'lucide-react';
+import { useSiteSettings } from '../../../hooks/useSiteSettings';
 
 // ============================================
 // ❓ SECCIÓN: PREGUNTAS FRECUENTES
@@ -14,7 +15,8 @@ interface FAQItem {
 }
 
 const FAQSection: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0); // First question open by default
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const { phone } = useSiteSettings(); // First question open by default
 
   const faqs: FAQItem[] = [
     {
@@ -203,11 +205,11 @@ const FAQSection: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:+1234567890"
+                href={`tel:${phone}`}
                 className="group px-8 py-4 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 text-white font-black text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-3"
               >
                 <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                Call us: (123) 456-7890
+                Call us: {phone}
               </a>
               <a
                 href="#contact"

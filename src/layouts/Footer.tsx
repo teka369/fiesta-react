@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Facebook, Instagram, Gift, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Instagram, Gift, ArrowRight, MessageCircle } from 'lucide-react';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { phone } = useSiteSettings();
 
   const navLinks = [
     { to: '/', label: 'Main' },
@@ -59,13 +61,26 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="tel:+1234567890"
+                  href={`tel:${phone}`}
                   className="inline-flex items-center gap-3 text-gray-700 hover:text-orange-600 transition-colors text-sm font-medium"
                 >
                   <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white border-2 border-orange-200 shadow">
                     <Phone className="w-4 h-4 text-orange-500" />
                   </span>
-                  (123) 456-7890
+                  {phone}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://wa.me/${phone.replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 text-gray-700 hover:text-green-600 transition-colors text-sm font-medium"
+                >
+                  <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white border-2 border-green-200 shadow">
+                    <MessageCircle className="w-4 h-4 text-green-500" />
+                  </span>
+                  WhatsApp
                 </a>
               </li>
               <li>

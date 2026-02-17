@@ -100,6 +100,7 @@ export async function uploadProductImage(file: File) {
 export interface SiteSettings {
   googleMapsEmbedUrl?: string | null;
   featuredProductId?: string | null;
+  contactPhone?: string | null;
 }
 
 export async function fetchSettings(): Promise<SiteSettings> {

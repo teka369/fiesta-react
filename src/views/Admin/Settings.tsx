@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2, Save, MapPin } from 'lucide-react';
+import { Loader2, Save, MapPin, Phone } from 'lucide-react';
 import { fetchSettings, updateSettings, type SiteSettings } from '../../lib/api';
 
 const Settings: React.FC = () => {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [embedUrl, setEmbedUrl] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -14,8 +15,9 @@ const Settings: React.FC = () => {
       .then((data) => {
         setSettings(data);
         setEmbedUrl(data.googleMapsEmbedUrl ?? '');
+        setContactPhone(data.contactPhone ?? '');
       })
-      .catch(() => setSettings({ googleMapsEmbedUrl: null }));
+      .catch(() => setSettings({ googleMapsEmbedUrl: null, contactPhone: null }));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,7 +27,11 @@ const Settings: React.FC = () => {
     setSaving(true);
     try {
       const cleaned = embedUrl.trim() || null;
-      const updated = await updateSettings({ googleMapsEmbedUrl: cleaned });
+      const cleanedPhone = contactPhone.trim() || null;
+      const updated = await updateSettings({ 
+        googleMapsEmbedUrl: cleaned,
+        contactPhone: cleanedPhone,
+      });
       setSettings(updated);
       setSuccess('Settings saved successfully.');
     } catch (err) {
@@ -60,8 +66,28 @@ const Settings: React.FC = () => {
             </div>
           )}
 
+          {/* Contact Phone */}
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1">
+              <Phone className="w-4 h-4 inline mr-1" />
+              WhatsApp / Phone Number
+            </label>
+            <p className="text-xs text-gray-500 mb-2">
+              Used for all WhatsApp and phone buttons on the website. Include country code (e.g., +1234567890).
+            </p>
+            <input
+              type="tel"
+              value={contactPhone}
+              onChange={(e) => setContactPhone(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none text-sm"
+              placeholder="+1234567890"
+            />
+          </div>
+
+          {/* Google Maps */}
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">
+              <MapPin className="w-4 h-4 inline mr-1" />
               Google Maps embed URL
             </label>
             <p className="text-xs text-gray-500 mb-2">
@@ -75,14 +101,6 @@ const Settings: React.FC = () => {
               className="w-full px-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 outline-none text-sm"
               placeholder="https://www.google.com/maps/embed?..."
             />
-          </div>
-
-          <div className="flex items-center gap-3 text-xs text-gray-500 bg-orange-50 border border-orange-100 rounded-xl p-3">
-            <MapPin className="w-4 h-4 text-orange-500" />
-            <p>
-              This map will be used on the home page and contact page. You can update it any time
-              if your business moves to a new location.
-            </p>
           </div>
 
           <button
@@ -109,4 +127,3 @@ const Settings: React.FC = () => {
 };
 
 export default Settings;
-
