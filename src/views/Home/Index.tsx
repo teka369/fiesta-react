@@ -571,15 +571,10 @@ const DeliveryAreasSection: React.FC<{ googleMapsEmbedUrl?: string | null }> = (
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
               <span className="text-gray-800">We Deliver</span>
-              <br />
-              <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                Across the United States
-              </span>
             </h2>
 
             <p className="text-xl text-gray-600 leading-relaxed">
-              We bring joy <span className="font-bold text-blue-600">all across the country</span>.
-              Check availability in your area and book your free delivery.
+              We bring joy Check availability in your area and book your free delivery.
             </p>
 
             {/* States List */}
