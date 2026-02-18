@@ -552,8 +552,9 @@ const ExploreRentalsSection: React.FC<{ categories: Category[]; productCountByCa
 // ============================================
 const DeliveryAreasSection: React.FC<{ googleMapsEmbedUrl?: string | null }> = ({ googleMapsEmbedUrl }) => {
   const states = [
-    'California', 'Texas', 'Florida', 'New York', 
-    'Illinois', 'Pennsylvania', 'Ohio', 'Georgia'
+    'Santa rosa ca', 'Windsor ca', 'Novato ca', 'Ukiah ca', 
+    'Cotati ca', 'Sonoma ca', 'Petaluma ca', 'Cloverdale ca',
+    'Sebastopol ca'
   ];
 
   return (
