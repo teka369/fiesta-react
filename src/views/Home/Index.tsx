@@ -246,7 +246,7 @@ const BestServiceSection: React.FC<{
             <div className="space-y-4">
               {[
                 { icon: Shield, text: 'Safety certified' },
-                { icon: Truck, text: 'Free delivery & setup' },
+                { icon: Truck, text: 'Fast delivery & setup' },
                 { icon: Clock, text: 'Available 24/7' },
                 { icon: ThumbsUp, text: 'Fun guaranteed' },
               ].map((feature, index) => (
@@ -396,7 +396,7 @@ const WhyChooseUsSection: React.FC = () => {
     },
     {
       icon: Truck,
-      title: 'Free Delivery & Setup',
+      title: 'Fast Delivery & Setup',
       description: 'We handle everything so you can relax and enjoy the party.',
       color: 'from-green-400 to-emerald-500',
     },
