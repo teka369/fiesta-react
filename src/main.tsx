@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './globals.css'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
@@ -26,11 +27,24 @@ import PaqueteNuevo from './views/Admin/PaqueteNuevo'
 import PaqueteEditar from './views/Admin/PaqueteEditar'
 import AdminSettings from './views/Admin/Settings'
 
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (previously cacheTime)
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <CartProvider>
-        <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <CartProvider>
+          <BrowserRouter>
           <Navbar />
           <div className="pt-20 md:pt-20 lg:pt-24">
           <Routes>
@@ -58,5 +72,6 @@ createRoot(document.getElementById('root')!).render(
       </BrowserRouter>
       </CartProvider>
     </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 )
