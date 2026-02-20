@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
-import { fetchProducts } from '../lib/api';
+import { useProducts } from '../hooks/useProducts';
+import type { Product } from '../types/product';
 
 interface CarouselSlide {
   id: string;
@@ -134,23 +135,21 @@ const Header: React.FC = () => {
   const lastMoveRef = useRef(0);
 
   // Cargar productos para el carrusel (solo los que tengan imagen, máximo 8)
+  const { products } = useProducts({ limit: 20, sortBy: 'createdAt', sortOrder: 'desc' });
+
+  // Convertir productos a slides del carrusel
   useEffect(() => {
-    fetchProducts({ limit: 20, sortBy: 'createdAt', sortOrder: 'desc' })
-      .then((res: { data?: Array<{ id: string; title?: string; images?: Array<{ url?: string; alt?: string }> }> }) => {
-        const list = res?.data ?? [];
-        const withImage = list.filter((p: { images?: Array<{ url?: string }> }) => p.images?.[0]?.url);
-        const slides: CarouselSlide[] = (withImage.length ? withImage : list)
-          .slice(0, 8)
-          .map((p: { id: string; title?: string; images?: Array<{ url?: string; alt?: string }> }) => ({
-            id: p.id,
-            url: p.images?.[0]?.url ?? '',
-            alt: p.images?.[0]?.alt ?? p.title ?? '',
-            title: p.title,
-          }));
-        setCarouselSlides(slides);
-      })
-      .catch(() => setCarouselSlides([]));
-  }, []);
+    const withImage = products.filter((p: Product) => p.images?.[0]?.url);
+    const slides: CarouselSlide[] = (withImage.length ? withImage : products)
+      .slice(0, 8)
+      .map((p: Product) => ({
+        id: p.id,
+        url: p.images?.[0]?.url ?? '',
+        alt: p.images?.[0]?.alt ?? p.title ?? '',
+        title: p.title,
+      }));
+    setCarouselSlides(slides);
+  }, [products]);
 
   // Elementos flotantes: una sola generación, estilos estáticos
   useEffect(() => {

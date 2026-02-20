@@ -23,8 +23,11 @@ import {
   Quote,
   Loader2,
 } from 'lucide-react';
-import { fetchProducts, fetchCategories, fetchProductById, fetchSettings, updateSettings, type SiteSettings } from '../../lib/api';
+import { fetchProductById, updateSettings } from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
+import { useSiteSettings } from '../../hooks/useSiteSettings';
+import { useProducts } from '../../hooks/useProducts';
+import { useCategories } from '../../hooks/useCategories';
 import type { Product } from '../../types/product';
 import type { Category } from '../../types/product';
 import FAQSection from './components/Preguntas-Frecuentes';
@@ -815,36 +818,24 @@ const QuestionsSection: React.FC = () => {
 // 🎯 MAIN COMPONENT
 // ============================================
 const Main: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const { settings, refetch: refetchSettings } = useSiteSettings();
+  const { products, isLoading, invalidate: invalidateProducts } = useProducts({ limit: 50, sortBy: 'createdAt', sortOrder: 'desc' });
+  const { categories } = useCategories();
 
-  useEffect(() => {
-    Promise.all([
-      fetchProducts({ limit: 50, sortBy: 'createdAt', sortOrder: 'desc' }).then((r) => r.data ?? []),
-      fetchCategories().then((c) => (Array.isArray(c) ? c : [])),
-      fetchSettings().catch(() => ({ googleMapsEmbedUrl: null, featuredProductId: null })),
-    ])
-      .then(([data, cats, site]) => {
-        setProducts(data);
-        setCategories(cats);
-        setSettings(site);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
+  const loading = isLoading;
 
   const handleFeaturedProductChange = async (productId: string | null) => {
-    const updatedSettings = await updateSettings({
-      ...settings,
+    await updateSettings({
+      googleMapsEmbedUrl: settings?.googleMapsEmbedUrl ?? null,
       featuredProductId: productId,
+      contactPhone: settings?.contactPhone ?? null,
     });
-    setSettings(updatedSettings);
+    refetchSettings();
+    invalidateProducts();
   };
 
   const productCountByCategory: Record<string, number> = {};
-  products.forEach((p) => {
+  products.forEach((p: Product) => {
     if (p.categoryId) {
       productCountByCategory[p.categoryId] = (productCountByCategory[p.categoryId] ?? 0) + 1;
     }
