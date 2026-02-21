@@ -27,7 +27,7 @@ import PaqueteNuevo from './views/Admin/PaqueteNuevo'
 import PaqueteEditar from './views/Admin/PaqueteEditar'
 import AdminSettings from './views/Admin/Settings'
 
-// Create a client
+// Create a client - API URL is configured via VITE_API_URL environment variable
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
