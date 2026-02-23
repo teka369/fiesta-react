@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="hidden sm:inline text-xs font-bold bg-white/30 px-3 py-1 rounded-full">
-                ✨ FREE DELIVERY ✨
+                ✨ FAST DELIVERY ✨
               </span>
               <a 
                 href="#" 

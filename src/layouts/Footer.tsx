@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Facebook, Instagram, Gift, ArrowRight, MessageCircle } from 'lucide-react';
-import { useSiteSettings } from '../hooks/useSiteSettings';
+import { MapPin, Phone, Mail, Facebook, Instagram, Gift, ArrowRight } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  const { phone } = useSiteSettings();
 
   const navLinks = [
     { to: '/', label: 'Main' },
@@ -61,26 +59,13 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li>
                 <a
-                  href={`tel:${phone}`}
+                  href="tel:+1234567890"
                   className="inline-flex items-center gap-3 text-gray-700 hover:text-orange-600 transition-colors text-sm font-medium"
                 >
                   <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white border-2 border-orange-200 shadow">
                     <Phone className="w-4 h-4 text-orange-500" />
                   </span>
-                  {phone}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`https://wa.me/${phone.replace(/\D/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-gray-700 hover:text-green-600 transition-colors text-sm font-medium"
-                >
-                  <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white border-2 border-green-200 shadow">
-                    <MessageCircle className="w-4 h-4 text-green-500" />
-                  </span>
-                  WhatsApp
+                  (123) 456-7890
                 </a>
               </li>
               <li>
@@ -132,7 +117,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-10 pt-6 border-t-2 border-orange-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-600 font-semibold">
-            © {currentYear} Sunny Party Rentals. Todos los derechos reservados.
+            © {currentYear} Sunny Party Rentals. Made by <a href="https://luxentium.top">Luxentium</a>.
           </p>
           <p className="text-xs text-gray-500 font-medium">
             Made with 🎉 for unforgettable partys

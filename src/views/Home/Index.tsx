@@ -577,7 +577,7 @@ const DeliveryAreasSection: React.FC<{ googleMapsEmbedUrl?: string | null }> = (
             </h2>
 
             <p className="text-xl text-gray-600 leading-relaxed">
-              We bring joy Check availability in your area and book your free delivery.
+              We bring joy Check availability in your area and book your fast delivery.
             </p>
 
             {/* States List */}
