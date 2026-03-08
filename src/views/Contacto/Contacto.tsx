@@ -364,9 +364,9 @@ const ContactFormSection: React.FC = () => {
                   <div className="flex-1">
                     <h3 className="text-lg font-black text-gray-800 mb-1">Address</h3>
                     <p className="text-gray-700 font-semibold">
-                      123 Party Street<br />
-                      Los Angeles, CA 90001<br />
-                      United States
+                      258<br />
+                      Roseland ave santa rosa<br />
+                      CA 95407 United States of America
                     </p>
                   </div>
                 </div>
