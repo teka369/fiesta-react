@@ -61,7 +61,7 @@ const ContactHeroSection: React.FC = () => {
           {/* Quick contact buttons */}
           <div className="flex flex-wrap justify-center gap-4 pt-4">
             <a
-              href={`tel:${phone}`}
+              href="+1 7072367654"
               className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-3"
             >
               <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />

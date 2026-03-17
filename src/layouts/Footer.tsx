@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+1 7072367654"
                   className="inline-flex items-center gap-3 text-gray-700 hover:text-orange-600 transition-colors text-sm font-medium"
                 >
                   <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white border-2 border-orange-200 shadow">
